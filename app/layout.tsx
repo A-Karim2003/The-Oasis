@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Welcome",
+  title: "The Oasis",
   description:
     "Escape to The Oasis — a luxury retreat nestled in nature. Explore our cabins, unwind in tranquility, and book your perfect getaway today.",
 };
