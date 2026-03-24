@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Josefin_Sans, Geist } from "next/font/google";
 import { cn } from "@/lib/utils";
+import Header from "./_components/Header";
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
 const josefin = Josefin_Sans({
   subsets: ["latin"],
@@ -22,7 +23,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={cn("font-sans", geist.variable)}>
-      <body className={`${josefin.className} antialiased`}>{children}</body>
+      <body className={`${josefin.className} antialiased h-screen`}>
+        <Header />
+        <main>{children}</main>
+      </body>
     </html>
   );
 }
