@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import PageDescription from "./_components/PageDescription";
 
 export const metadata: Metadata = {
   title: "Cabins",
@@ -9,7 +10,7 @@ export const metadata: Metadata = {
 export default function page() {
   return (
     <div>
-      <h1>This is cabins page</h1>
+      <PageDescription />
     </div>
   );
 }
