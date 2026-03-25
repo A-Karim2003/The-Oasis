@@ -16,7 +16,7 @@ const navLinks: NavLink[] = [
     label: (
       <span className="flex items-center gap-5">
         <Avatar>
-          <AvatarImage src="avatar" />
+          {/* <AvatarImage src="avatar" /> */}
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
 
@@ -30,7 +30,7 @@ const navLinks: NavLink[] = [
 
 export default function Header() {
   return (
-    <header className="px-8 py-5  border-primary-900">
+    <header className="px-8 py-5">
       <div className="flex justify-between items-center max-w-7xl mx-auto">
         <Link href="/" className="flex items-center gap-4 z-10">
           <Image src={logo} height="60" width="60" alt="The Wild Oasis logo" />

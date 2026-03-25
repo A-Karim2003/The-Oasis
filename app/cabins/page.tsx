@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import PageDescription from "./_components/PageDescription";
+import FilterTabs from "./_components/FilterTabs";
 
 export const metadata: Metadata = {
   title: "Cabins",
@@ -9,8 +10,12 @@ export const metadata: Metadata = {
 
 export default function page() {
   return (
-    <div>
+    <section className="h-full border flex flex-col">
       <PageDescription />
-    </div>
+
+      <div className="h-full">
+        <FilterTabs />
+      </div>
+    </section>
   );
 }

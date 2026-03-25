@@ -27,7 +27,9 @@ export default function RootLayout({
         className={`${josefin.className} antialiased h-screen flex flex-col bg-primary-950`}
       >
         <Header />
-        <main className="flex-1">{children}</main>
+        <main className="flex-1 max-w-7xl w-full m-auto px-8 py-5">
+          {children}
+        </main>
       </body>
     </html>
   );
