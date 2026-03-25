@@ -23,9 +23,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={cn("font-sans", geist.variable)}>
-      <body className={`${josefin.className} antialiased h-screen`}>
+      <body
+        className={`${josefin.className} antialiased h-screen flex flex-col bg-primary-950`}
+      >
         <Header />
-        <main>{children}</main>
+        <main className="flex-1">{children}</main>
       </body>
     </html>
   );
