@@ -1,8 +1,7 @@
 "use client";
 
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { usePathname, useSearchParams } from "next/navigation";
-import { useRouter } from "next/router";
+import { usePathname, useSearchParams, useRouter } from "next/navigation";
 
 const tabs = [
   { value: "all", label: "All cabins" },
@@ -16,12 +15,24 @@ export default function FilterTabs() {
   const pathname = usePathname();
   const router = useRouter();
 
-  function handleTabChange(value: string) {}
+  const activeTab = searchParams.get("capacity") ?? "all";
+
+  function handleTabChange(value: string) {
+    const params = new URLSearchParams(searchParams.toString());
+    if (value === "all") {
+      params.delete("capacity");
+    } else {
+      params.set("capacity", value);
+    }
+
+    // Construct new path and update the URL
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+  }
 
   console.log(searchParams);
   return (
-    <div className="border border-red-500 h-16 flex justify-end">
-      <Tabs defaultValue="all">
+    <div className="h-16 flex justify-end">
+      <Tabs defaultValue={activeTab} onValueChange={handleTabChange}>
         <TabsList className="bg-[#0f172a] rounded-none p-0 border h-16!">
           {tabs.map((tab, index) => (
             <TabsTrigger
