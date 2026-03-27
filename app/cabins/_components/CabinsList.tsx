@@ -2,7 +2,7 @@ import Cabin from "./Cabin";
 
 export default function CabinsList() {
   return (
-    <div className="grid lg:grid-cols-2 gap-12">
+    <div className="grid lg:grid-cols-2 gap-12 mt-5">
       <Cabin />
       <Cabin />
       <Cabin />
