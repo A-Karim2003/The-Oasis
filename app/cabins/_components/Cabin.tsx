@@ -1,14 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
+import type { StaticImageData } from "next/image";
 import { Users } from "lucide-react";
-
+import image1 from "@/public/images/about-1.jpg";
 type Cabin = {
   id: number;
   name: string;
   maxCapacity: number;
   regularPrice: number;
   discount: number;
-  image: string;
+  image: string | StaticImageData;
 };
 
 const cabin: Cabin = {
@@ -17,7 +18,7 @@ const cabin: Cabin = {
   maxCapacity: 2,
   regularPrice: 400,
   discount: 0,
-  image: "/images/cabin-1.jpg",
+  image: image1,
 };
 
 export default function Cabin() {

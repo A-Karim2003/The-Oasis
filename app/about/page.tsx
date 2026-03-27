@@ -5,13 +5,15 @@ import Link from "next/link";
 
 export default function Page() {
   return (
-    <div className="flex flex-col gap-32 text-lg">
+    <div className="flex flex-col gap-32 text-xl text-primary-100">
       {/* Row 1 */}
-      <div className="flex flex-wrap gap-24 items-center">
-        <div className="flex-1 min-w-75">
+      <div className="flex flex-col lg:flex-row gap-12 items-center">
+        {/* Text */}
+        <div className="flex-1">
           <h1 className="text-4xl mb-10 text-accent-400 font-medium">
             Welcome to The Wild Oasis
           </h1>
+
           <div className="space-y-8">
             <p>
               Where nature&apos;s beauty and comfortable living blend
@@ -20,12 +22,14 @@ export default function Page() {
               the luxury cabins. It&apos;s about the experience of reconnecting
               with nature and enjoying simple pleasures with family.
             </p>
+
             <p>
               Our 8 luxury cabins provide a cozy base, but the real freedom and
               peace you&apos;ll find in the surrounding mountains. Wander
               through lush forests, breathe in the fresh air, and watch the
               stars twinkle above from the warmth of a campfire or your hot tub.
             </p>
+
             <p>
               This is where memorable moments are made, surrounded by
               nature&apos;s splendor. It&apos;s a place to slow down, relax, and
@@ -34,31 +38,25 @@ export default function Page() {
           </div>
         </div>
 
-        <div className="relative shrink-0 w-72 h-80">
+        {/* Image */}
+        <div className="relative w-full max-w-lg aspect-4/5">
           <Image
             src={image1}
             alt="Family sitting around a fire pit in front of cabin"
-            fill
             className="object-cover"
+            fill
           />
         </div>
       </div>
 
       {/* Row 2 */}
-      <div className="flex flex-wrap gap-24 items-center">
-        <div className="relative shrink-0 w-72 h-80">
-          <Image
-            src={image2}
-            alt="Family that manages The Wild Oasis"
-            fill
-            className="object-cover"
-          />
-        </div>
-
-        <div className="flex-1 min-w-75">
+      <div className="flex flex-col lg:flex-row gap-12 items-center">
+        {/* Text */}
+        <div className="flex-1 lg:order-2">
           <h1 className="text-4xl mb-10 text-accent-400 font-medium">
             Managed by our family since 1962
           </h1>
+
           <div className="space-y-8">
             <p>
               Since 1962, The Wild Oasis has been a cherished family-run
@@ -66,6 +64,7 @@ export default function Page() {
               with love and care, passing down through our family as a testament
               to our dedication to creating a warm, welcoming environment.
             </p>
+
             <p>
               Over the years, we&apos;ve maintained the essence of The Wild
               Oasis, blending the timeless beauty of the mountains with the
@@ -74,6 +73,7 @@ export default function Page() {
               us at The Wild Oasis soon, where tradition meets tranquility, and
               every visit is like coming home.
             </p>
+
             <div>
               <Link
                 href="/cabins"
@@ -83,6 +83,16 @@ export default function Page() {
               </Link>
             </div>
           </div>
+        </div>
+
+        {/* Image */}
+        <div className="relative w-full max-w-lg aspect-4/5 ">
+          <Image
+            src={image2}
+            alt="Family that manages The Wild Oasis"
+            className="object-cover"
+            fill
+          />
         </div>
       </div>
     </div>

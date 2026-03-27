@@ -30,7 +30,7 @@ const navLinks: NavLink[] = [
 
 export default function Header() {
   return (
-    <header className="px-8 py-5">
+    <header className="px-8 py-5 border-b border-primary-600">
       <div className="flex justify-between items-center max-w-7xl mx-auto">
         <Link href="/" className="flex items-center gap-4 z-10">
           <Image src={logo} height="60" width="60" alt="The Wild Oasis logo" />
