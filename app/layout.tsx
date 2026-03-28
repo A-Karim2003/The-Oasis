@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Josefin_Sans, Geist } from "next/font/google";
+import { Josefin_Sans } from "next/font/google";
 import { cn } from "@/lib/utils";
 import Header from "./_components/Header";
-
-const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
 const josefin = Josefin_Sans({
   subsets: ["latin"],
@@ -22,14 +20,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={cn("font-sans", geist.variable)}>
+    <html lang="en" className={cn("font-sans")}>
       <body
         className={`${josefin.className} antialiased h-screen flex flex-col bg-primary-950`}
       >
         <Header />
-        <main className="flex-1 max-w-7xl w-full m-auto px-8 py-5">
-          {children}
-        </main>
+        <main className="flex-1">{children}</main>
       </body>
     </html>
   );
