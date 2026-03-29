@@ -1,3 +1,9 @@
+import Title from "../_components/Title";
+
 export default function page() {
-  return <div></div>;
+  return (
+    <div>
+      <Title>Welcome,</Title>
+    </div>
+  );
 }
