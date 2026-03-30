@@ -1,9 +1,9 @@
-import type { Metadata } from "next";
+import Title from "../_components/Title";
 
-export const metadata: Metadata = {
-  title: "Account",
-};
-
-export default function page() {
-  return <div></div>;
+export default function Homepage() {
+  return (
+    <div>
+      <Title>Welcome,</Title>
+    </div>
+  );
 }
