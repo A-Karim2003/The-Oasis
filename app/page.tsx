@@ -1,7 +1,13 @@
+import { createClient } from "@/lib/supabase/server";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function Home() {
+export default async function Home() {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase.from("cabins").select("*");
+
+  console.log(data, error);
   return (
     <>
       <Image
