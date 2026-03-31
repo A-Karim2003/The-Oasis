@@ -29,7 +29,6 @@ export default function FilterTabs() {
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });
   }
 
-  console.log(searchParams);
   return (
     <div className="h-16 flex justify-end">
       <Tabs defaultValue={activeTab} onValueChange={handleTabChange}>
