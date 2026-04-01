@@ -1,34 +1,20 @@
 import Image from "next/image";
 import Link from "next/link";
-import type { StaticImageData } from "next/image";
 import { Users } from "lucide-react";
-import image1 from "@/public/images/about-1.jpg";
-type Cabin = {
-  id: number;
-  name: string;
-  maxCapacity: number;
-  regularPrice: number;
-  discount: number;
-  image: string | StaticImageData;
+import type { Cabin as CabinType } from "../lib/types";
+
+type CabinProps = {
+  cabin: CabinType;
 };
 
-const cabin: Cabin = {
-  id: 1,
-  name: "Cabin 001",
-  maxCapacity: 2,
-  regularPrice: 400,
-  discount: 0,
-  image: image1,
-};
-
-export default function Cabin() {
-  const discountedPrice = cabin.regularPrice - cabin.discount;
+export default function Cabin({ cabin }: CabinProps) {
+  const discountedPrice = cabin.price - cabin.discount;
 
   return (
     <div className="flex border border-primary-800">
       <div className="relative h-48 w-48 shrink-0">
         <Image
-          src={cabin.image}
+          src={cabin.image_url}
           alt={cabin.name}
           fill
           className="object-cover"
@@ -44,7 +30,7 @@ export default function Cabin() {
             <Users className="w-5 h-5" />
             For up to
             <span className="text-lg text-primary-200">
-              <b>{cabin.maxCapacity}</b>
+              <b>{cabin.capacity}</b>
             </span>
             guests
           </p>
@@ -57,7 +43,7 @@ export default function Cabin() {
             </span>
             {cabin.discount > 0 && (
               <span className="text-primary-400 line-through text-sm">
-                ${cabin.regularPrice}
+                ${cabin.price}
               </span>
             )}
             <span className="text-primary-400 text-sm">/ night</span>
