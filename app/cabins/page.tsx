@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import PageDescription from "./_components/PageDescription";
 import FilterTabs from "./_components/FilterTabs";
 import CabinsList from "./_components/CabinsList";
+import { Suspense } from "react";
+import CabinsListSkeleton from "./_components/CabinsListSkeleton";
 
 export const metadata: Metadata = {
   title: "Cabins",
@@ -16,7 +18,9 @@ export default function page() {
 
       <div className="h-full">
         <FilterTabs />
-        <CabinsList />
+        <Suspense fallback={<CabinsListSkeleton />}>
+          <CabinsList />
+        </Suspense>
       </div>
     </section>
   );

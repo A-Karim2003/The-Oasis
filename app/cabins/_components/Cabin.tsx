@@ -36,7 +36,7 @@ export default function Cabin({ cabin }: CabinProps) {
           </p>
         </div>
 
-        <div className="flex items-center justify-between h-16 border-primary-800 border ">
+        <div className="flex items-center justify-between h-16 border-primary-800 border">
           <div className="flex flex-1 h-full items-center gap-2 border-r px-2">
             <span className="text-3xl font-semibold text-primary-100">
               ${discountedPrice}
@@ -51,7 +51,7 @@ export default function Cabin({ cabin }: CabinProps) {
 
           <Link
             href={`/cabins/${cabin.id}`}
-            className="border-primary-800 pl-4 text-primary-200 hover:text-accent-400 transition-colors flex-1"
+            className="border-primary-800 pl-4 text-primary-200 hover:bg-accent-600 hover:text-primary-100 transition-colors flex-1 h-full flex items-center cursor-pointer"
           >
             Details & reservation →
           </Link>
