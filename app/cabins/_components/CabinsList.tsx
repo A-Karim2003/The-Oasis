@@ -1,4 +1,4 @@
-import type { Cabin as CabinType } from "../lib/types";
+import type { Cabin as CabinType } from "@/app/cabins/lib/types";
 import Cabin from "./Cabin";
 import { getCabins } from "@/lib/data/cabins";
 

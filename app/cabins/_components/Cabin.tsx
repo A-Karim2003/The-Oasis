@@ -17,6 +17,7 @@ export default function Cabin({ cabin }: CabinProps) {
           src={cabin.image_url}
           alt={cabin.name}
           fill
+          sizes="192px"
           className="object-cover"
         />
       </div>
