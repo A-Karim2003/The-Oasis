@@ -1,5 +1,6 @@
 import { getCabin } from "@/lib/data/cabins";
 import CabinDetails from "../_components/CabinDetails";
+import CabinReservation from "../_components/CabinReservation";
 
 export default async function CabinDetailPage({
   params,
@@ -12,7 +13,7 @@ export default async function CabinDetailPage({
   return (
     <div>
       <CabinDetails cabin={cabin} />
-      {/* <CabinReservation/> */}
+      <CabinReservation cabin={cabin} />
     </div>
   );
 }
