@@ -6,6 +6,7 @@ export default async function CabinsList() {
   const data = await getCabins();
 
   const cabins = data as CabinType[] | null;
+  const sortedCabins = cabins?.sort((a, b) => Number(a.name) - Number(b.name));
 
   return (
     <div
@@ -14,7 +15,7 @@ export default async function CabinsList() {
         gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 30rem), 1fr))",
       }}
     >
-      {cabins?.map((cabin) => (
+      {sortedCabins?.map((cabin) => (
         <Cabin key={cabin.id} cabin={cabin} />
       ))}
     </div>

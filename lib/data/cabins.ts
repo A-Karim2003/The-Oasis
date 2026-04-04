@@ -2,10 +2,14 @@ import type { Cabin } from "@/app/cabins/lib/types";
 
 import { supabaseAdmin } from "../supabase/admin";
 import { notFound } from "next/navigation";
+import { cacheLife, cacheTag } from "next/cache";
 
 // const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export async function getCabins(): Promise<Cabin[]> {
+  "use cache";
+  cacheTag("cabins");
+  cacheLife("hours");
   const { data, error } = await supabaseAdmin.from("cabins").select("*");
 
   if (error) {
@@ -17,6 +21,9 @@ export async function getCabins(): Promise<Cabin[]> {
 }
 
 export async function getCabin(id: string): Promise<Cabin> {
+  "use cache";
+  cacheTag(`cabins-${id}`);
+  cacheLife("hours");
   const { data, error } = await supabaseAdmin
     .from("cabins")
     .select("*")
