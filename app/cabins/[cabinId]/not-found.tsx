@@ -17,7 +17,7 @@ export default function NotFound() {
         href="/cabins"
         className="bg-accent-500 text-primary-900 px-6 py-3 font-semibold hover:bg-accent-600 transition-colors"
       >
-        Return Home
+        Return to Cabins
       </Link>
     </div>
   );

@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 
 // const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-export async function getCabins() {
+export async function getCabins(): Promise<Cabin[]> {
   const { data, error } = await supabaseAdmin.from("cabins").select("*");
 
   if (error) {

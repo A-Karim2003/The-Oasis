@@ -17,7 +17,9 @@ export default function page() {
       <PageDescription />
 
       <div className="h-full">
-        <FilterTabs />
+        <Suspense fallback={null}>
+          <FilterTabs />
+        </Suspense>
         <Suspense fallback={<CabinsListSkeleton />}>
           <CabinsList />
         </Suspense>
