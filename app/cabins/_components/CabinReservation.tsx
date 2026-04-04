@@ -6,6 +6,7 @@ import { useState } from "react";
 import { DateRange } from "react-day-picker";
 import type { Cabin as CabinType } from "@/app/cabins/lib/types";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { enGB } from "react-day-picker/locale";
 
 type CabinReservationProps = {
   cabin: CabinType;
@@ -20,17 +21,18 @@ export default function CabinReservation({ cabin }: CabinReservationProps) {
         Reserve {cabin.name} today. Pay on arrival.
       </Title>
 
-      <div className="grid grid-cols-2 border border-primary-800">
+      <div className="grid grid-cols-2 max-[900px]:grid-cols-1 border border-primary-800">
         {/* Left — Calendar + price bar */}
         <div className="flex flex-col">
           <Calendar
+            locale={enGB}
             mode="range"
             numberOfMonths={2}
             selected={range}
             onSelect={setRange}
-            className="bg-primary-950 text-white p-4 w-full"
+            className="bg-primary-950 text-white p-4 w-full flex-1"
           />
-          <div className="bg-accent-500 text-primary-900 p-4 flex items-center">
+          <div className="bg-accent-500 text-primary-900 p-4 flex items-center h-20">
             <span className="text-3xl font-bold">
               ${cabin.price - cabin.discount}
             </span>
@@ -51,7 +53,7 @@ export default function CabinReservation({ cabin }: CabinReservationProps) {
             </div>
           </div>
 
-          <div className="p-8 flex flex-col gap-6 flex-1">
+          <div className="p-8 flex flex-col gap-6">
             <div className="flex flex-col gap-2">
               <label className="text-primary-200 text-lg">
                 How many guests?
