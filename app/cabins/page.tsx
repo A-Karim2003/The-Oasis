@@ -11,7 +11,13 @@ export const metadata: Metadata = {
     "Browse our collection of cabins at The Oasis. Find your perfect retreat and book your stay today.",
 };
 
-export default function page() {
+export default async function page({
+  searchParams,
+}: {
+  searchParams: Promise<{ capacity: string }>;
+}) {
+  const { capacity } = await searchParams;
+
   return (
     <section className="h-full  flex flex-col">
       <PageDescription />

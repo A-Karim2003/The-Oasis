@@ -4,7 +4,6 @@ import { getCabins } from "@/lib/data/cabins";
 
 export default async function CabinsList() {
   const data = await getCabins();
-
   const cabins = data as CabinType[] | null;
   const sortedCabins = cabins?.sort((a, b) => Number(a.name) - Number(b.name));
 

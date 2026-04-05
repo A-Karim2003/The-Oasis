@@ -2,8 +2,14 @@ import Image from "next/image";
 import image1 from "@/public/images/about-1.jpg";
 import image2 from "@/public/images/about-2.jpg";
 import Link from "next/link";
+import { getCabins } from "@/lib/data/cabins";
+import { cacheLife } from "next/cache";
 
-export default function Page() {
+export default async function Page() {
+  "use cache";
+  cacheLife("days");
+  const cabins = await getCabins();
+
   return (
     <div className="flex flex-col gap-32 text-xl text-primary-100">
       {/* Row 1 */}
@@ -24,10 +30,11 @@ export default function Page() {
             </p>
 
             <p>
-              Our 8 luxury cabins provide a cozy base, but the real freedom and
-              peace you&apos;ll find in the surrounding mountains. Wander
-              through lush forests, breathe in the fresh air, and watch the
-              stars twinkle above from the warmth of a campfire or your hot tub.
+              Our <b>{cabins.length} </b> luxury cabins provide a cozy base, but
+              the real freedom and peace you&apos;ll find in the surrounding
+              mountains. Wander through lush forests, breathe in the fresh air,
+              and watch the stars twinkle above from the warmth of a campfire or
+              your hot tub.
             </p>
 
             <p>
