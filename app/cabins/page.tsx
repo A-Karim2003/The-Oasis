@@ -16,7 +16,7 @@ export default async function page({
 }: {
   searchParams: Promise<{ capacity: string }>;
 }) {
-  const { capacity } = await searchParams;
+  const { capacity: capacityFilter } = await searchParams;
 
   return (
     <section className="h-full  flex flex-col">
@@ -26,8 +26,8 @@ export default async function page({
         <Suspense fallback={null}>
           <FilterTabs />
         </Suspense>
-        <Suspense fallback={<CabinsListSkeleton />}>
-          <CabinsList />
+        <Suspense fallback={<CabinsListSkeleton />} key={capacityFilter}>
+          <CabinsList capacityFilter={capacityFilter} />
         </Suspense>
       </div>
     </section>

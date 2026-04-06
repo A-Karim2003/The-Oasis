@@ -1,11 +1,25 @@
-import type { Cabin as CabinType } from "@/app/cabins/lib/types";
 import Cabin from "./Cabin";
 import { getCabins } from "@/lib/data/cabins";
 
-export default async function CabinsList() {
-  const data = await getCabins();
-  const cabins = data as CabinType[] | null;
+export default async function CabinsList({
+  capacityFilter,
+}: {
+  capacityFilter: string;
+}) {
+  const cabins = await getCabins();
   const sortedCabins = cabins?.sort((a, b) => Number(a.name) - Number(b.name));
+
+  const sortedFilteredCabins = sortedCabins?.filter((cabin) => {
+    if (!capacityFilter) return true;
+
+    const [min, max] = capacityFilter
+      .split("-")
+      .map((option) => Number(option));
+
+    if (isNaN(min) || isNaN(max)) return true; // guards again invalid strings
+
+    return cabin.capacity >= min && cabin.capacity <= max;
+  });
 
   return (
     <div
@@ -14,7 +28,7 @@ export default async function CabinsList() {
         gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 30rem), 1fr))",
       }}
     >
-      {sortedCabins?.map((cabin) => (
+      {sortedFilteredCabins?.map((cabin) => (
         <Cabin key={cabin.id} cabin={cabin} />
       ))}
     </div>

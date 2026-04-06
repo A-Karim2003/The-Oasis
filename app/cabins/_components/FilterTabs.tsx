@@ -18,7 +18,8 @@ export default function FilterTabs() {
   const activeTab = searchParams.get("capacity") ?? "all";
 
   function handleTabChange(value: string) {
-    const params = new URLSearchParams(searchParams.toString());
+    const params = new URLSearchParams(searchParams);
+
     if (value === "all") {
       params.delete("capacity");
     } else {
