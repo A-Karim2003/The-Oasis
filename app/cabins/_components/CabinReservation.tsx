@@ -15,6 +15,8 @@ type CabinReservationProps = {
 export default function CabinReservation({ cabin }: CabinReservationProps) {
   const [range, setRange] = useState<DateRange | undefined>();
 
+  const [minBookingLength, maxBookingLength] = [1, 23];
+
   return (
     <div className="mt-15">
       <Title className="text-5xl text-center mb-12">
@@ -27,6 +29,12 @@ export default function CabinReservation({ cabin }: CabinReservationProps) {
           <Calendar
             locale={enGB}
             mode="range"
+            disabled={{ before: new Date() }}
+            min={minBookingLength}
+            max={maxBookingLength}
+            endMonth={
+              new Date(new Date().getFullYear() + 2, new Date().getMonth())
+            }
             numberOfMonths={2}
             selected={range}
             onSelect={setRange}

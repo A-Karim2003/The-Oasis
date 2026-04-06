@@ -1,6 +1,11 @@
-import { getCabin, getCabins } from "@/lib/data/cabins";
+import {
+  getBookedDatesByCabinId,
+  getCabin,
+  getCabins,
+} from "@/lib/data/cabins";
 import CabinDetails from "../_components/CabinDetails";
 import CabinReservation from "../_components/CabinReservation";
+import { getSettings } from "@/lib/data/settings";
 
 export async function generateMetadata({
   params,
@@ -28,6 +33,9 @@ export default async function CabinDetailPage({
 }) {
   const { cabinId } = await params;
   const cabin = await getCabin(cabinId);
+  const settings = await getSettings();
+
+  const bookedDated = await getBookedDatesByCabinId(298);
 
   return (
     <div>
