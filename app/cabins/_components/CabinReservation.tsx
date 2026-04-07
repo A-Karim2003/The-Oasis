@@ -10,15 +10,20 @@ import { enGB } from "react-day-picker/locale";
 
 type CabinReservationProps = {
   cabin: CabinType;
+  bookedDates: Date[];
 };
 
-export default function CabinReservation({ cabin }: CabinReservationProps) {
-  const [range, setRange] = useState<DateRange | undefined>();
+export default function CabinReservation({
+  cabin,
+  bookedDates,
+}: CabinReservationProps) {
+  console.log(bookedDates);
 
+  const [range, setRange] = useState<DateRange | undefined>();
   const [minBookingLength, maxBookingLength] = [1, 23];
 
   return (
-    <div className="mt-15">
+    <div className="mt-15 h-full">
       <Title className="text-5xl text-center mb-12">
         Reserve {cabin.name} today. Pay on arrival.
       </Title>

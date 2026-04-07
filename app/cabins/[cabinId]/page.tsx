@@ -2,6 +2,9 @@ import { getBookedDatesByCabinId, getCabin } from "@/lib/data/cabins";
 import CabinDetails from "../_components/CabinDetails";
 import CabinReservation from "../_components/CabinReservation";
 import { getSettings } from "@/lib/data/settings";
+import CabinReservationWrapper from "../_components/CabinReservationWrapper";
+import { Suspense } from "react";
+import { LoadingSpinner } from "@/app/_components/LoadingSpinner";
 
 export async function generateMetadata({
   params,
@@ -29,15 +32,24 @@ export default async function CabinDetailPage({
 }) {
   const { cabinId } = await params;
 
-  const cabin = await getCabin(cabinId);
-  const settings = await getSettings();
-  const bookedDated = await getBookedDatesByCabinId(298);
+  const [cabin, settings] = await Promise.all([
+    getCabin(cabinId),
+    getSettings(),
+  ]);
 
   return (
     <div>
-      <h1>{settings.max_booking_length}</h1>
       <CabinDetails cabin={cabin} />
-      <CabinReservation cabin={cabin} />
+
+      <Suspense
+        fallback={
+          <div className="min-h-120 flex items-center justify-center">
+            <LoadingSpinner />
+          </div>
+        }
+      >
+        <CabinReservationWrapper cabin={cabin} />
+      </Suspense>
     </div>
   );
 }
