@@ -1,7 +1,7 @@
 import { cacheLife, cacheTag } from "next/cache";
 import { supabaseAdmin } from "../supabase/admin";
 
-type Settings = {
+export type Settings = {
   min_booking_length: number;
   max_booking_length: number;
   max_guest_per_booking: number;

@@ -5,17 +5,20 @@ import { Calendar } from "@/components/ui/calendar";
 import { useState } from "react";
 import { DateRange } from "react-day-picker";
 import type { Cabin as CabinType } from "@/app/cabins/lib/types";
+import type { Settings } from "@/lib/data/settings";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { enGB } from "react-day-picker/locale";
 
 type CabinReservationProps = {
   cabin: CabinType;
   bookedDates: Date[];
+  settings: Settings;
 };
 
 export default function CabinReservation({
   cabin,
   bookedDates,
+  settings,
 }: CabinReservationProps) {
   console.log(bookedDates);
 
@@ -54,7 +57,7 @@ export default function CabinReservation({
         </div>
 
         {/* Right — Form */}
-        <div className="bg-primary-900 flex flex-col">
+        <form className="bg-primary-900 flex flex-col">
           <div className="bg-primary-950 flex items-center justify-around gap-3 p-4">
             <span className="text-primary-300 text-sm">Logged in as</span>
             <div className="flex items-center gap-4">
@@ -73,6 +76,13 @@ export default function CabinReservation({
               </label>
               <select className="bg-primary-800 text-primary-100 p-3 w-full border border-primary-700">
                 <option value="">Select number of guests...</option>
+                {Array.from({ length: cabin.capacity }, (_, i) => i).map(
+                  (item) => (
+                    <option key={item} value={item + 1}>
+                      {`${item + 1} guest`}
+                    </option>
+                  ),
+                )}
               </select>
             </div>
 
@@ -92,7 +102,7 @@ export default function CabinReservation({
               </span>
             </div>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );
