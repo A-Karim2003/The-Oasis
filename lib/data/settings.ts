@@ -8,10 +8,14 @@ type Settings = {
   breakfast_price: number;
 };
 
+const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
 export async function getSettings(): Promise<Settings> {
   "use cache";
   cacheTag("settings");
   cacheLife("hours");
+
+  await wait(5000);
   const { data, error } = await supabaseAdmin
     .from("settings")
     .select("*")

@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import { cacheLife, cacheTag } from "next/cache";
 import { eachDayOfInterval } from "date-fns";
 
-// const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export async function getCabins(): Promise<Cabin[]> {
   "use cache";
@@ -25,6 +25,8 @@ export async function getCabin(id: string): Promise<Cabin> {
   "use cache";
   cacheTag(`cabins-${id}`);
   cacheLife("hours");
+
+  await wait(5000);
   const { data, error } = await supabaseAdmin
     .from("cabins")
     .select("*")
@@ -45,6 +47,8 @@ export async function getBookedDatesByCabinId(
   const today = new Date();
   today.setUTCHours(0, 0, 0, 0);
   const todayISO = today.toISOString();
+
+  await wait(5000);
 
   const { data, error } = await supabaseAdmin
     .from("bookings")
