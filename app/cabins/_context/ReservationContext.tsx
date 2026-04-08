@@ -4,7 +4,7 @@ import { createContext, useContext, useState } from "react";
 
 type ReservationContextType = {
   range: DateRange | undefined;
-  setRange: (range: DateRange) => void;
+  setRange: (range: DateRange | undefined) => void;
   resetRange: () => void;
 };
 

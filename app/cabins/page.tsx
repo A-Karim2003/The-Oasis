@@ -4,6 +4,7 @@ import FilterTabs from "./_components/FilterTabs";
 import CabinsList from "./_components/CabinsList";
 import { Suspense } from "react";
 import CabinsListSkeleton from "./_components/CabinsListSkeleton";
+import ReservationReminder from "./_components/ReservationReminder";
 
 export const metadata: Metadata = {
   title: "Cabins",
@@ -19,7 +20,7 @@ export default async function page({
   const { capacity: capacityFilter } = await searchParams;
 
   return (
-    <section className="h-full  flex flex-col">
+    <section className="flex flex-col border border-red-500">
       <PageDescription />
 
       <div className="h-full">
@@ -28,6 +29,7 @@ export default async function page({
         </Suspense>
         <Suspense fallback={<CabinsListSkeleton />} key={capacityFilter}>
           <CabinsList capacityFilter={capacityFilter} />
+          <ReservationReminder />
         </Suspense>
       </div>
     </section>

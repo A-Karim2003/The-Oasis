@@ -1,6 +1,5 @@
-import { getBookedDatesByCabinId, getCabin } from "@/lib/data/cabins";
+import { getCabin } from "@/lib/data/cabins";
 import CabinDetails from "../_components/CabinDetails";
-import CabinReservation from "../_components/CabinReservation";
 import { getSettings } from "@/lib/data/settings";
 import CabinReservationWrapper from "../_components/CabinReservationWrapper";
 import { Suspense } from "react";

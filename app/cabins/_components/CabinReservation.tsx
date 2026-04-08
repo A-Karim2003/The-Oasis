@@ -2,12 +2,11 @@
 
 import Title from "@/app/_components/Title";
 import { Calendar } from "@/components/ui/calendar";
-import { useState } from "react";
-import { DateRange } from "react-day-picker";
 import type { Cabin as CabinType } from "@/app/cabins/lib/types";
 import type { Settings } from "@/lib/data/settings";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { enGB } from "react-day-picker/locale";
+import { useReservation } from "../_context/ReservationContext";
 
 type CabinReservationProps = {
   cabin: CabinType;
@@ -20,10 +19,10 @@ export default function CabinReservation({
   bookedDates,
   settings,
 }: CabinReservationProps) {
-  console.log(bookedDates);
-
-  const [range, setRange] = useState<DateRange | undefined>();
+  // const [range, setRange] = useState<DateRange | undefined>();
+  const { range, setRange } = useReservation();
   const [minBookingLength, maxBookingLength] = [1, 23];
+  console.log(range);
 
   return (
     <div className="mt-15 h-full">
@@ -37,6 +36,7 @@ export default function CabinReservation({
           <Calendar
             locale={enGB}
             mode="range"
+            required={false}
             disabled={{ before: new Date() }}
             min={minBookingLength}
             max={maxBookingLength}

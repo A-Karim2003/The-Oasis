@@ -58,8 +58,6 @@ export async function getBookedDatesByCabinId(
     throw new Error("Bookings could not get loaded");
   }
 
-  console.log(data);
-
   const bookedDates = data
     .map((booking) =>
       // returns every single day between these two dates
