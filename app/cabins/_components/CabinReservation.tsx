@@ -46,7 +46,7 @@ export default function CabinReservation({
             numberOfMonths={2}
             selected={range}
             onSelect={setRange}
-            className="bg-primary-950 text-white p-4 w-full flex-1"
+            className="bg-accent-400 text-accent-400 p-4 w-full flex-1"
           />
           <div className="bg-accent-500 text-primary-900 p-4 flex items-center h-20">
             <span className="text-3xl font-bold">
