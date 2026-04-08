@@ -14,7 +14,7 @@ export async function getCabins(): Promise<Cabin[]> {
   const { data, error } = await supabaseAdmin.from("cabins").select("*");
 
   if (error) {
-    console.error("Supabase error:", error);
+    console.error("Supabase error:", error.message);
     throw new Error("Failed to fetch cabins");
   }
 
