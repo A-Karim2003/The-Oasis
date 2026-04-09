@@ -20,7 +20,7 @@ export default async function page({
   const { capacity: capacityFilter } = await searchParams;
 
   return (
-    <section className="flex flex-col border border-red-500">
+    <section className="flex flex-col">
       <PageDescription />
 
       <div className="h-full">
