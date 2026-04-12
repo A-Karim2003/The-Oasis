@@ -1,7 +1,10 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import logo from "@/public/images/logo.png";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { authClient } from "@/app/lib/auth-client";
 
 type NavLink = {
   label: string | React.ReactNode;
@@ -44,7 +47,7 @@ export default function Header() {
             The Wild Oasis
           </span>
         </Link>
-
+        <LoginButton />
         <nav>
           <ul className="flex gap-16 items-center">
             {navLinks.map((navLink) => (
@@ -61,5 +64,19 @@ export default function Header() {
         </nav>
       </div>
     </header>
+  );
+}
+
+function LoginButton() {
+  return (
+    <button
+      onClick={() =>
+        authClient.signIn.social({
+          provider: "google",
+        })
+      }
+    >
+      Sign in with Google
+    </button>
   );
 }
