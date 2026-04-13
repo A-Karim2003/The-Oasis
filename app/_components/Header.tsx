@@ -4,36 +4,38 @@ import Link from "next/link";
 import Image from "next/image";
 import logo from "@/public/images/logo.png";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { authClient } from "@/app/lib/auth-client";
+import { authClient } from "../lib/auth-client";
 
 type NavLink = {
   label: string | React.ReactNode;
   url: string;
 };
 
-const navLinks: NavLink[] = [
-  { label: "Cabins", url: "/cabins" },
-  { label: "About", url: "/about" },
-
-  {
-    label: (
-      <span className="flex items-center gap-5">
-        <Avatar>
-          {/* <AvatarImage src="avatar" /> */}
-          <AvatarFallback>CN</AvatarFallback>
-        </Avatar>
-
-        <span>Guest area</span>
-      </span>
-    ),
-
-    url: "/account",
-  },
-] as const;
-
 export default function Header() {
+  const { data: session } = authClient.useSession();
+
+  const navLinks: NavLink[] = [
+    { label: "Cabins", url: "/cabins" },
+    { label: "About", url: "/about" },
+
+    {
+      label: (
+        <span className="flex items-center gap-5">
+          <Avatar>
+            <AvatarImage src={session?.user.image ?? ""} />
+            <AvatarFallback>CN</AvatarFallback>
+          </Avatar>
+
+          <span>Guest area</span>
+        </span>
+      ),
+
+      url: "/account",
+    },
+  ] as const;
+
   return (
-    <header className="px-8 py-5 border-b border-primary-900">
+    <header className="px-8 py-5 shadow-sm shadow-primary-750">
       <div className="flex justify-between items-center max-w-7xl mx-auto">
         <Link href="/" className="flex items-center gap-4 z-10">
           <Image
@@ -47,7 +49,6 @@ export default function Header() {
             The Wild Oasis
           </span>
         </Link>
-        <LoginButton />
         <nav>
           <ul className="flex gap-16 items-center">
             {navLinks.map((navLink) => (
@@ -64,19 +65,5 @@ export default function Header() {
         </nav>
       </div>
     </header>
-  );
-}
-
-function LoginButton() {
-  return (
-    <button
-      onClick={() =>
-        authClient.signIn.social({
-          provider: "google",
-        })
-      }
-    >
-      Sign in with Google
-    </button>
   );
 }
