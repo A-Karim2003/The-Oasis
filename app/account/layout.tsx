@@ -1,6 +1,8 @@
 import { Metadata } from "next";
 import Sidebar from "./_components/Sidebar";
-import { getSession } from "../lib/auth-client";
+import { auth } from "@/lib/auth";
+import LoginPage from "../_components/LoginPage";
+import { headers } from "next/headers";
 
 export const metadata: Metadata = {
   title: "Guest area",
@@ -11,9 +13,9 @@ export default async function Layout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getSession();
+  const session = await auth.api.getSession({ headers: await headers() });
 
-  if (session) return <div>Login</div>;
+  if (!session) return <LoginPage />;
 
   return (
     <div className="grid grid-cols-[16rem_1fr] h-full px-8 py-12">

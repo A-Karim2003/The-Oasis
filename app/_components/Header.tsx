@@ -22,8 +22,14 @@ export default function Header() {
       label: (
         <span className="flex items-center gap-5">
           <Avatar>
-            <AvatarImage src={session?.user.image ?? ""} />
-            <AvatarFallback>CN</AvatarFallback>
+            <AvatarImage src={session?.user?.image ?? ""} />
+            <AvatarFallback>
+              {session?.user?.name
+                ?.split(" ")
+                .map((n) => n[0])
+                .join("")
+                .toUpperCase() ?? "CN"}
+            </AvatarFallback>{" "}
           </Avatar>
 
           <span>Guest area</span>

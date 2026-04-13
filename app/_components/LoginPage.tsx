@@ -1,11 +1,22 @@
-// app/login/page.tsx
+"use client";
+
 import { signIn } from "@/app/lib/auth-client";
 import Image from "next/image";
 import logo from "@/public/images/logo.png";
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import { Spinner } from "@/components/ui/spinner";
 
 export default function LoginPage() {
+  const [isPending, setIsPending] = useState(false);
+
+  async function handleLogin() {
+    setIsPending(true);
+    await signIn();
+    setIsPending(false);
+  }
   return (
-    <div className="min-h-screen bg-primary-950 flex items-center justify-center relative overflow-hidden">
+    <div className="h-full bg-primary-950 flex items-center justify-center relative overflow-hidden">
       {/* ambient glow */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_60%_0%,rgba(161,120,76,0.12),transparent_65%)]" />
 
@@ -27,16 +38,17 @@ export default function LoginPage() {
 
         <div className="w-10 h-px bg-accent-500/40 mb-8" />
 
-        <button
-          onClick={signIn}
+        <Button
+          onClick={handleLogin}
           className="w-full flex items-center justify-center gap-3 px-6 py-3.5
                      border border-accent-600/35 text-primary-300 text-xs tracking-widest uppercase
                      hover:border-accent-500/65 hover:text-primary-100 hover:bg-accent-900/20
-                     transition-all duration-200 active:scale-[0.99]"
+                     transition-all duration-200 active:scale-[0.99] cursor-pointer"
         >
+          {isPending && <Spinner className="size-5" />}
           <GoogleIcon />
           Continue with Google
-        </button>
+        </Button>
 
         <p className="mt-8 text-xs font-light text-primary-600 text-center leading-relaxed">
           By continuing, you agree to our terms of service.
