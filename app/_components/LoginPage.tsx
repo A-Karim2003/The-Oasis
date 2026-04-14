@@ -6,18 +6,21 @@ import logo from "@/public/images/logo.png";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Spinner } from "@/components/ui/spinner";
+import { useSearchParams } from "next/navigation";
 
 export default function LoginPage() {
   const [isPending, setIsPending] = useState(false);
+  const searchParams = useSearchParams();
+
+  const redirectTo = searchParams.get("redirectTo") ?? "/account";
 
   async function handleLogin() {
     setIsPending(true);
-    await signIn();
+    await signIn(redirectTo);
     setIsPending(false);
   }
   return (
     <div className="h-full bg-primary-950 flex items-center justify-center relative overflow-hidden">
-      {/* ambient glow */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_60%_0%,rgba(161,120,76,0.12),transparent_65%)]" />
 
       <div className="relative z-10 flex flex-col items-center w-full max-w-sm px-8">

@@ -4,11 +4,10 @@ export const authClient = createAuthClient();
 
 // helpers for sign in, sign out triggered by user actions
 
-export const signIn = async () => {
+export const signIn = async (callbackURL: string = "/account") => {
   await authClient.signIn.social({
     provider: "google",
-    callbackURL: "/account",
-    // errorCallbackURL: "/error-page",
+    callbackURL,
   });
 };
 
@@ -20,9 +19,4 @@ export const signOut = async () => {
       },
     },
   });
-};
-
-export const getSession = async () => {
-  const session = await authClient.getSession();
-  return session;
 };

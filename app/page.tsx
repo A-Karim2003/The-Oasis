@@ -14,7 +14,7 @@ export default async function Home() {
       />
       <section className="h-full flex justify-center relative">
         <div className="flex flex-col items-center absolute top-[20%]">
-          <h1 className="text-8xl text-primary-50 mb-10 tracking-tight font-normal">
+          <h1 className="text-8xl text-primary-50 mb-10 tracking-tight font-normal text-center">
             Welcome to the Oasis
           </h1>
 
