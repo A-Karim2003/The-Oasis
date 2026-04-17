@@ -1,16 +1,7 @@
 import { cacheLife, cacheTag } from "next/cache";
 import { supabaseAdmin } from "../supabase/admin";
 
-export type Settings = {
-  min_booking_length: number;
-  max_booking_length: number;
-  max_guest_per_booking: number;
-  breakfast_price: number;
-};
-
-// const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-
-export async function getSettings(): Promise<Settings> {
+export async function getSettings() {
   "use cache";
   cacheTag("settings");
   cacheLife("hours");

@@ -29,13 +29,18 @@ export const auth = betterAuth({
     user: {
       // when tringgers when a user is created in user table
       create: {
+        // This runs AFTER a new user is created in auth.users
         after: async (user) => {
-          await pool.query(
-            `INSERT INTO guests (name, email, "userId") 
-             VALUES ($1, $2, $3)
-             ON CONFLICT ("userId") DO NOTHING`,
-            [user.name, user.email, user.id],
-          );
+          try {
+            await pool.query(
+              `INSERT INTO guests (name, email, "userId") 
+                VALUES ($1, $2, $3)
+                ON CONFLICT ("userId") DO NOTHING`,
+              [user.name, user.email, user.id],
+            );
+          } catch (error) {
+            console.error("Failed to create guest:", error);
+          }
         },
       },
     },
