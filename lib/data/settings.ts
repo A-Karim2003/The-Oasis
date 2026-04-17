@@ -1,5 +1,10 @@
 import { cacheLife, cacheTag } from "next/cache";
 import { supabaseAdmin } from "../supabase/admin";
+import type { Tables } from "@/types/supabase";
+
+// const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+export type Settings = Tables<"settings">;
 
 export async function getSettings() {
   "use cache";

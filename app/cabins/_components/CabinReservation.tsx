@@ -1,23 +1,26 @@
 "use client";
 
 import Title from "@/app/_components/Title";
-import type { Cabin as CabinType } from "@/app/cabins/lib/types";
+import type { Cabin } from "@/app/cabins/lib/types";
 import type { Settings } from "@/lib/data/settings";
 import ReservationCalendar from "./ReservationCalendar";
 import ReservationForm from "./ReservationForm";
 import { authClient } from "@/app/lib/auth-client";
 import ReservationLoginPrompt from "./ReservationLoginPrompt";
+import { Guest } from "@/lib/data/guests";
 
 type CabinReservationProps = {
-  cabin: CabinType;
+  cabin: Cabin;
   bookedDates: Date[];
   settings: Settings;
+  currentGuest: Guest;
 };
 
 export default function CabinReservation({
   cabin,
   bookedDates,
   settings,
+  currentGuest,
 }: CabinReservationProps) {
   const { data: session } = authClient.useSession();
 

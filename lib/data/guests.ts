@@ -1,6 +1,9 @@
 import { headers } from "next/headers";
 import { auth } from "../auth";
 import { supabaseAdmin } from "../supabase/admin";
+import type { Tables } from "@/types/supabase";
+
+export type Guest = Tables<"guests">;
 
 export async function getCurrentGuest() {
   const session = await auth.api.getSession({ headers: await headers() });
