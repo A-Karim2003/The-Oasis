@@ -9,20 +9,26 @@ import { useForm, FormProvider } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import SelectCountry from "../_components/SelectCountry";
+import { Guest } from "@/lib/data/guests";
+import { updateGuest } from "../lib/actions";
 
 const schema = z.object({
   country: z.string().min(1, "Please select a country"),
   nationalId: z.string().min(5, "National ID must be at least 5 characters"),
 });
 
-export type FormData = z.infer<typeof schema>;
+export type GuestFormData = z.infer<typeof schema>;
 
-export default function ClientProfileForm() {
-  const methods = useForm<FormData>({
+type ClientProfileFormProp = {
+  guest: Guest | null;
+};
+
+export default function ClientProfileForm({ guest }: ClientProfileFormProp) {
+  const methods = useForm<GuestFormData>({
     resolver: zodResolver(schema),
     defaultValues: {
-      country: "",
-      nationalId: "",
+      country: guest?.nationality || "",
+      nationalId: guest?.nationality_id || "",
     },
   });
 
@@ -32,8 +38,8 @@ export default function ClientProfileForm() {
     formState: { errors },
   } = methods;
 
-  function onSubmit(data: FormData) {
-    console.log(data);
+  async function onSubmit(data: GuestFormData) {
+    await updateGuest(data);
   }
 
   return (
@@ -51,7 +57,7 @@ export default function ClientProfileForm() {
               <Field>
                 <FieldLabel htmlFor="fullName">Full name</FieldLabel>
                 <Input
-                  value="Guest"
+                  value={guest?.name}
                   id="fullName"
                   disabled
                   className="bg-primary-800 text-primary-800 border-none text-lg px-4 py-6"
@@ -61,7 +67,7 @@ export default function ClientProfileForm() {
               <Field>
                 <FieldLabel htmlFor="email">Email address</FieldLabel>
                 <Input
-                  value="guest@gmail.com"
+                  value={guest?.email}
                   id="email"
                   type="email"
                   disabled

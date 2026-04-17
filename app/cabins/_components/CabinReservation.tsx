@@ -1,3 +1,5 @@
+"use client";
+
 import Title from "@/app/_components/Title";
 import ReservationCalendar from "./ReservationCalendar";
 import ReservationForm from "./ReservationForm";

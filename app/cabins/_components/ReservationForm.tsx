@@ -1,14 +1,13 @@
 "use client";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { updateGuest } from "../actions";
 import { useReservation } from "../_context/ReservationContext";
 
 export default function ReservationForm() {
   const { cabin, session } = useReservation();
 
   return (
-    <form action={updateGuest} className="bg-primary-900 flex flex-col">
+    <form className="bg-primary-900 flex flex-col">
       <div className="bg-primary-950 flex items-center justify-around gap-3 p-4">
         <span className="text-primary-300 text-sm">Logged in as</span>
         <div className="flex items-center gap-4">

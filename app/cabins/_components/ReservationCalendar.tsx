@@ -1,14 +1,13 @@
 "use client";
 
 import { Calendar } from "@/components/ui/calendar";
-import type { Cabin as CabinType } from "@/app/cabins/lib/types";
 import { enGB } from "react-day-picker/locale";
 import { useReservation } from "../_context/ReservationContext";
 
 const MIN_BOOKING_LENGTH = 1;
 const MAX_BOOKING_LENGTH = 23;
 
-export default function ReservationCalendar({}) {
+export default function ReservationCalendar() {
   const { range, setRange, cabin } = useReservation();
 
   return (
