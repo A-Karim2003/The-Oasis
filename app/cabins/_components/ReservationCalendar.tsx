@@ -8,14 +8,8 @@ import { useReservation } from "../_context/ReservationContext";
 const MIN_BOOKING_LENGTH = 1;
 const MAX_BOOKING_LENGTH = 23;
 
-type ReservationCalendarProps = {
-  cabin: CabinType;
-};
-
-export default function ReservationCalendar({
-  cabin,
-}: ReservationCalendarProps) {
-  const { range, setRange } = useReservation();
+export default function ReservationCalendar({}) {
+  const { range, setRange, cabin } = useReservation();
 
   return (
     <div className="flex flex-col">
@@ -34,7 +28,7 @@ export default function ReservationCalendar({
       />
       <div className="bg-accent-500 text-primary-900 p-4 flex items-center h-20">
         <span className="text-3xl font-bold">
-          ${cabin.price - cabin.discount}
+          ${cabin.price - (cabin?.discount || 0)}
         </span>
         <span className="text-sm ml-1">/night</span>
       </div>

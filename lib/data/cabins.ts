@@ -29,7 +29,7 @@ export async function getCabin(id: string): Promise<Cabin> {
   const { data, error } = await supabaseAdmin
     .from("cabins")
     .select("*")
-    .eq("id", id)
+    .eq("id", Number(id))
     .single();
 
   if (error) {
