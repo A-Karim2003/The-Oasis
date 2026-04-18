@@ -21,14 +21,15 @@ export default async function Layout({
   return (
     <div className="grid grid-cols-[16rem_1fr] h-full px-8 py-12">
       <Sidebar />
-      <main className="px-8">{children}</main>
-
-      <ToastContainer
-        position="bottom-right"
-        autoClose={3000}
-        theme="dark"
-        transition={Bounce}
-      />
+      <main className="px-8">
+        {children}
+        <ToastContainer
+          position="bottom-right"
+          autoClose={3000}
+          theme="dark"
+          transition={Bounce}
+        />
+      </main>
     </div>
   );
 }

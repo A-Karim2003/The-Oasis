@@ -1,16 +1,22 @@
+"use client";
+
 import { Field, FieldLabel } from "@/components/ui/field";
 import { useFormContext } from "react-hook-form";
-import { FormData } from "../profile/ClientProfile";
+import { GuestFormData } from "../profile/ClientProfile";
 import { getCountries } from "@/lib/data/account";
 import { use } from "react";
+import Image from "next/image";
+import { Guest } from "@/lib/data/guests";
+
+type SelectCountryProp = { guest: Guest | null };
 
 const countriesPromise = getCountries();
 
-export default function SelectCountry() {
+export default function SelectCountry({ guest }: SelectCountryProp) {
   const {
     register,
     formState: { errors },
-  } = useFormContext<FormData>();
+  } = useFormContext<GuestFormData>();
 
   const countries = use(countriesPromise);
 
@@ -21,7 +27,14 @@ export default function SelectCountry() {
         className="flex items-center justify-between"
       >
         <span>Where are you from?</span>
-        <span>flag</span>
+        <span>
+          <Image
+            src={guest?.country_flag || ""}
+            width={35}
+            height={35}
+            alt="Country flag"
+          />
+        </span>
       </FieldLabel>
       <select
         id="country"
@@ -30,7 +43,7 @@ export default function SelectCountry() {
       >
         <option value="">Select country…</option>
         {countries.map((country) => (
-          <option value={country.name} key={country.name}>
+          <option key={country.name} value={`${country.name}%${country.flag}`}>
             {country.name}
           </option>
         ))}

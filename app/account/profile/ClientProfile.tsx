@@ -12,10 +12,15 @@ import SelectCountry from "../_components/SelectCountry";
 import { Guest } from "@/lib/data/guests";
 import { updateGuest } from "../lib/actions";
 import { toast } from "react-toastify";
+import { Spinner } from "@/components/ui/spinner";
 
 const schema = z.object({
   country: z.string().min(1, "Please select a country"),
-  nationalId: z.string().min(5, "National ID must be at least 5 characters"),
+  nationalId: z
+    .string()
+    .regex(/^\d+$/, "National ID must contain numbers only")
+    .min(8)
+    .max(12),
 });
 
 export type GuestFormData = z.infer<typeof schema>;
@@ -28,7 +33,7 @@ export default function ClientProfileForm({ guest }: ClientProfileFormProp) {
   const methods = useForm<GuestFormData>({
     resolver: zodResolver(schema),
     defaultValues: {
-      country: guest?.nationality || "",
+      country: `${guest?.nationality}%${guest?.country_flag}` || "",
       nationalId: guest?.nationality_id || "",
     },
   });
@@ -36,7 +41,7 @@ export default function ClientProfileForm({ guest }: ClientProfileFormProp) {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = methods;
 
   async function onSubmit(data: GuestFormData) {
@@ -81,7 +86,7 @@ export default function ClientProfileForm({ guest }: ClientProfileFormProp) {
                 />
               </Field>
 
-              <SelectCountry />
+              <SelectCountry guest={guest} />
 
               <Field>
                 <FieldLabel htmlFor="nationalId">National ID number</FieldLabel>
@@ -100,8 +105,10 @@ export default function ClientProfileForm({ guest }: ClientProfileFormProp) {
               <div className="flex justify-end">
                 <Button
                   type="submit"
+                  disabled={isSubmitting}
                   className="bg-accent-500 hover:bg-accent-600 text-primary-900 font-semibold px-6 py-6 text-lg"
                 >
+                  {isSubmitting && <Spinner />}
                   Update profile
                 </Button>
               </div>
