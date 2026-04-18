@@ -3,6 +3,7 @@ import Sidebar from "./_components/Sidebar";
 import { auth } from "@/lib/auth";
 import LoginPage from "../_components/LoginPage";
 import { headers } from "next/headers";
+import { Bounce, ToastContainer } from "react-toastify";
 
 export const metadata: Metadata = {
   title: "Guest area",
@@ -21,6 +22,13 @@ export default async function Layout({
     <div className="grid grid-cols-[16rem_1fr] h-full px-8 py-12">
       <Sidebar />
       <main className="px-8">{children}</main>
+
+      <ToastContainer
+        position="bottom-right"
+        autoClose={3000}
+        theme="dark"
+        transition={Bounce}
+      />
     </div>
   );
 }

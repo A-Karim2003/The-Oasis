@@ -11,6 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import SelectCountry from "../_components/SelectCountry";
 import { Guest } from "@/lib/data/guests";
 import { updateGuest } from "../lib/actions";
+import { toast } from "react-toastify";
 
 const schema = z.object({
   country: z.string().min(1, "Please select a country"),
@@ -39,7 +40,12 @@ export default function ClientProfileForm({ guest }: ClientProfileFormProp) {
   } = methods;
 
   async function onSubmit(data: GuestFormData) {
-    await updateGuest(data);
+    try {
+      await updateGuest(data);
+      toast.success("Profile updated!");
+    } catch {
+      toast.error("Something went wrong");
+    }
   }
 
   return (
