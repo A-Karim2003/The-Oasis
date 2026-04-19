@@ -25,3 +25,28 @@ export async function updateGuest(formData: GuestFormData) {
 
   revalidatePath("/account/profile");
 }
+
+export async function deleteReservation(bookingId: number) {
+  const guest = await getCurrentGuest();
+
+  if (!guest) throw new Error("Unauthorized");
+
+  const { error } = await supabaseAdmin
+    .from("bookings")
+    .delete()
+    .eq("id", bookingId)
+    .eq("guest_id", guest.id);
+
+  if (error) {
+    console.error(error);
+    throw new Error(error.message);
+  }
+
+  revalidatePath("/account/reservations");
+}
+
+export async function updateReservation(bookingId: number) {
+  const guest = await getCurrentGuest();
+
+  if (!guest) throw new Error("Unauthorized");
+}

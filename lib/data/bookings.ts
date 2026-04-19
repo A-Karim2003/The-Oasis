@@ -28,8 +28,6 @@ export async function getBookings() {
   return data;
 }
 
-// was 666
-
 export async function getBooking(id: number) {
   const { data, error } = await supabaseAdmin
     .from("bookings")

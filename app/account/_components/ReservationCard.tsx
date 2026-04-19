@@ -11,12 +11,29 @@ import { Pencil, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { Booking } from "@/lib/data/bookings";
 import { Button } from "@/components/ui/button";
+import { deleteReservation } from "../lib/actions";
+import { toast } from "react-toastify";
+import { useTransition } from "react";
+import { Spinner } from "@/components/ui/spinner";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 export default function ReservationCard({
   reservation,
 }: {
   reservation: Booking;
 }) {
+  const [isPending, startTransition] = useTransition();
+
   const isPastReservation = isPast(new Date(reservation.start_date));
   const numOfNights = differenceInDays(
     new Date(reservation.end_date),
@@ -25,6 +42,18 @@ export default function ReservationCard({
   const totalPrice =
     (reservation.cabin_price ?? 0) * numOfNights +
     (reservation.extras_price ?? 0);
+
+  function handleDelete(reservationId: number) {
+    startTransition(async () => {
+      try {
+        await deleteReservation(reservationId);
+        toast.success("Deleted reservation");
+      } catch (e) {
+        toast.error("Failed to delete reservation");
+        throw e;
+      }
+    });
+  }
 
   return (
     <div className="flex border border-primary-800">
@@ -82,7 +111,7 @@ export default function ReservationCard({
         </div>
       </div>
 
-      <div className="flex flex-col border-l border-primary-800 divide-y divide-primary-800">
+      <div className="flex flex-col border w-32 border-primary-800">
         {!isPastReservation && (
           <>
             <Button
@@ -95,14 +124,41 @@ export default function ReservationCard({
                 Edit
               </Link>
             </Button>
-
-            <Button
-              variant="ghost"
-              className="flex items-center gap-2 px-6 flex-1 text-primary-300 hover:bg-primary-800 hover:text-primary-100 transition-colors text-sm font-medium rounded-none"
-            >
-              <Trash2 className="w-4 h-4" />
-              Delete
-            </Button>
+            <hr className="border-accent-600" />
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button
+                  variant="ghost"
+                  disabled={isPending}
+                  className="flex items-center gap-2 px-6 flex-1 text-primary-300 hover:bg-primary-800 hover:text-primary-100 transition-colors text-sm font-medium rounded-none h-full w-full"
+                >
+                  {isPending ? <Spinner /> : <Trash2 className="w-4 h-4" />}
+                  {isPending ? "Deleting..." : "Delete"}
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent className="bg-primary-900">
+                <AlertDialogHeader>
+                  <AlertDialogTitle className="text-accent-100 text-xl">
+                    Delete reservation?
+                  </AlertDialogTitle>
+                  <AlertDialogDescription className="text-md">
+                    This will permanently delete your reservation in{" "}
+                    {reservation.cabins?.name}. This action cannot be undone.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter className="bg-primary-600">
+                  <AlertDialogCancel className="bg-primary-800 border-none text-accent-100 cursor-pointer">
+                    Cancel
+                  </AlertDialogCancel>
+                  <AlertDialogAction
+                    className="bg-red-600 text-accent-100 cursor-pointer"
+                    onClick={() => handleDelete(reservation.id)}
+                  >
+                    Delete
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </>
         )}
       </div>
