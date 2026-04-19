@@ -1,24 +1,28 @@
 import { supabaseAdmin } from "../supabase/admin";
+import { getCurrentGuest } from "./guests";
 
-export async function getBookings(guestId: number) {
+export async function getBookings() {
+  const guest = await getCurrentGuest();
+
+  if (!guest) throw new Error("Not authenticated");
+
   const { data, error } = await supabaseAdmin
     .from("bookings")
-    .select(
-      "id, created_at, startDate, endDate, numNights, numGuests, totalPrice, guestId, cabinId, cabins(name, image)",
-    )
-    .eq("guestId", guestId)
-    .order("startDate");
+    .select("*, cabins(name, image_url)")
+    .eq("guest_id", guest.id)
+    .order("start_date");
 
   if (error) {
     console.error(error);
     throw new Error("Bookings could not get loaded");
   }
 
+  //reservations are bookings where status are unconfirmed
   return data;
 }
 
 export async function getBooking(id: number) {
-  const { data, error, count } = await supabaseAdmin
+  const { data, error } = await supabaseAdmin
     .from("bookings")
     .select("*")
     .eq("id", id)
