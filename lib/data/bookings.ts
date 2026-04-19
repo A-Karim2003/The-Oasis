@@ -1,9 +1,17 @@
 import { supabaseAdmin } from "../supabase/admin";
 import { getCurrentGuest } from "./guests";
+import { QueryData } from "@supabase/supabase-js";
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const bookingsQuery = supabaseAdmin
+  .from("bookings")
+  .select("*, cabins(name, image_url) ");
+
+export type Bookings = QueryData<typeof bookingsQuery>;
+export type Booking = Bookings[number];
 
 export async function getBookings() {
   const guest = await getCurrentGuest();
-
   if (!guest) throw new Error("Not authenticated");
 
   const { data, error } = await supabaseAdmin
@@ -17,9 +25,10 @@ export async function getBookings() {
     throw new Error("Bookings could not get loaded");
   }
 
-  //reservations are bookings where status are unconfirmed
   return data;
 }
+
+// was 666
 
 export async function getBooking(id: number) {
   const { data, error } = await supabaseAdmin

@@ -14,7 +14,6 @@ export default async function Page() {
     <div className="flex flex-col gap-32 text-xl text-primary-100">
       {/* Row 1 */}
       <div className="flex flex-col lg:flex-row gap-12 items-center">
-        {/* Text */}
         <div className="flex-1">
           <h1 className="text-4xl mb-10 text-accent-400 font-medium">
             Welcome to The Wild Oasis
