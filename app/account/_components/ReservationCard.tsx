@@ -56,8 +56,8 @@ export default function ReservationCard({
   }
 
   return (
-    <div className="flex border border-primary-800">
-      <div className="relative w-32 aspect-square shrink-0">
+    <div className="flex flex-col min-[1000px]:flex-row border border-primary-800">
+      <div className="relative w-full h-48 min-[1000px]:w-32 min-[1000px]:h-auto min-[1000px]:aspect-square shrink-0">
         <Image
           src={reservation.cabins?.image_url || ""}
           fill
@@ -111,13 +111,13 @@ export default function ReservationCard({
         </div>
       </div>
 
-      <div className="flex flex-col border w-32 border-primary-800">
+      <div className="flex min-[1000px]:flex-col border-t min-[1000px]:border-t-0 min-[1000px]:border-l w-full min-[1000px]:w-32 border-primary-800">
         {!isPastReservation && (
           <>
             <Button
               variant="ghost"
               asChild
-              className="flex-1 gap-2 px-6 text-primary-300 hover:bg-primary-800 hover:text-primary-100 transition-colors text-sm font-medium h-full w-full rounded-none"
+              className="flex-1 gap-2 px-6 text-primary-300 hover:bg-primary-800 hover:text-primary-100 transition-colors text-sm font-medium h-full w-full rounded-none min-h-12"
             >
               <Link href={`/account/reservations/edit/${reservation.id}`}>
                 <Pencil className="w-4 h-4" />
@@ -130,7 +130,7 @@ export default function ReservationCard({
                 <Button
                   variant="ghost"
                   disabled={isPending}
-                  className="flex items-center gap-2 px-6 flex-1 text-primary-300 hover:bg-primary-800 hover:text-primary-100 transition-colors text-sm font-medium rounded-none h-full w-full"
+                  className="flex items-center gap-2 px-6 flex-1 text-primary-300 hover:bg-primary-800 hover:text-primary-100 transition-colors text-sm font-medium rounded-none h-full w-full min-h-12"
                 >
                   {isPending ? <Spinner /> : <Trash2 className="w-4 h-4" />}
                   {isPending ? "Deleting..." : "Delete"}
