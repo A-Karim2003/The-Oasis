@@ -45,8 +45,27 @@ export async function deleteReservation(bookingId: number) {
   revalidatePath("/account/reservations");
 }
 
-export async function updateReservation(bookingId: number) {
+export async function updateReservation(
+  prevState: unknown,
+  formData: FormData,
+) {
   const guest = await getCurrentGuest();
-
   if (!guest) throw new Error("Unauthorized");
+
+  const { bookingId, num_of_guests, observations } = Object.fromEntries(
+    formData,
+  ) as Record<string, string>;
+
+  const { error } = await supabaseAdmin
+    .from("bookings")
+    .update({ num_of_guests: Number(num_of_guests), observations })
+    .eq("id", Number(bookingId));
+
+  if (error) {
+    console.log(error);
+    return { success: false, message: "Failed to update reservation" };
+  }
+  revalidatePath("/account/reservations");
+
+  return { success: true, message: "Reservation updated successfully" };
 }

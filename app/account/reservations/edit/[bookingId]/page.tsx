@@ -1,10 +1,10 @@
 import { Metadata } from "next";
 import Title from "@/app/_components/Title";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import { getSettings } from "@/lib/data/settings";
+import EditReservationForm from "@/app/account/_components/EditReservationForm";
 import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-import { Users, MessageSquare } from "lucide-react";
+import { MessageSquare, Users } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
 
 export const metadata: Metadata = {
   title: "Edit Reservation",
@@ -13,15 +13,17 @@ export const metadata: Metadata = {
 export default async function EditReservationPage({
   params,
 }: {
-  params: Promise<{ reservationId: string }>;
+  params: Promise<{ bookingId: string }>;
 }) {
-  const { reservationId } = await params;
+  const { bookingId } = await params;
+  const { max_guest_per_booking } = await getSettings();
 
   return (
     <div>
-      <Title>Edit Reservation #{reservationId}</Title>
+      <Title>Edit Reservation #{bookingId}</Title>
 
-      <form className="mt-8 flex flex-col gap-8 max-w-xl">
+      <EditReservationForm>
+        <input type="hidden" name="bookingId" value={bookingId} />
         <div className="flex flex-col gap-2">
           <Label
             htmlFor="num_of_guests"
@@ -30,14 +32,21 @@ export default async function EditReservationPage({
             <Users className="w-4 h-4" />
             Number of guests
           </Label>
-          <Input
+
+          <select
             id="num_of_guests"
             name="num_of_guests"
-            type="number"
-            min={1}
-            className="bg-primary-800 border-primary-700 text-primary-100 placeholder:text-primary-500 focus-visible:ring-accent-500"
-            placeholder="How many guests?"
-          />
+            className="bg-primary-800 border-primary-700 text-primary-100 placeholder:text-primary-500 focus-visible:ring-accent-500 p-3 rounded-md"
+          >
+            {Array.from(
+              { length: max_guest_per_booking! },
+              (_, i) => i + 1,
+            ).map((guest) => (
+              <option key={guest} value={guest}>
+                {guest} guest
+              </option>
+            ))}
+          </select>
         </div>
 
         <div className="flex flex-col gap-2">
@@ -52,27 +61,11 @@ export default async function EditReservationPage({
             id="observations"
             name="observations"
             rows={6}
-            className="bg-primary-800 border-primary-700 text-primary-100 placeholder:text-primary-500 focus-visible:ring-accent-500 resize-none"
+            className="text-lg p-3 bg-primary-800 border-primary-700 text-primary-100 placeholder:text-primary-500 focus-visible:ring-accent-500 resize-none"
             placeholder="Any pets, allergies, special requirements, etc.?"
           />
         </div>
-
-        <div className="flex items-center justify-end gap-4">
-          <Button
-            variant="ghost"
-            type="button"
-            className="text-primary-300 hover:text-primary-100 hover:bg-primary-800"
-          >
-            Cancel
-          </Button>
-          <Button
-            type="submit"
-            className="bg-accent-500 hover:bg-accent-600 text-primary-900 font-semibold px-8"
-          >
-            Update reservation
-          </Button>
-        </div>
-      </form>
+      </EditReservationForm>
     </div>
   );
 }
