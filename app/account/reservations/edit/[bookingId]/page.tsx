@@ -5,6 +5,7 @@ import EditReservationForm from "@/app/account/_components/EditReservationForm";
 import { Label } from "@/components/ui/label";
 import { MessageSquare, Users } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
+import { getBooking } from "@/lib/data/bookings";
 
 export const metadata: Metadata = {
   title: "Edit Reservation",
@@ -16,7 +17,14 @@ export default async function EditReservationPage({
   params: Promise<{ bookingId: string }>;
 }) {
   const { bookingId } = await params;
-  const { max_guest_per_booking } = await getSettings();
+
+  const [settings, booking] = await Promise.all([
+    getSettings(),
+    getBooking(Number(bookingId)),
+  ]);
+
+  const { max_guest_per_booking } = settings;
+  const { num_of_guests, observations } = booking;
 
   return (
     <div>
@@ -34,6 +42,7 @@ export default async function EditReservationPage({
           </Label>
 
           <select
+            defaultValue={num_of_guests}
             id="num_of_guests"
             name="num_of_guests"
             className="bg-primary-800 border-primary-700 text-primary-100 placeholder:text-primary-500 focus-visible:ring-accent-500 p-3 rounded-md"
@@ -58,6 +67,7 @@ export default async function EditReservationPage({
             Observations
           </Label>
           <Textarea
+            defaultValue={observations ?? ""}
             id="observations"
             name="observations"
             rows={6}

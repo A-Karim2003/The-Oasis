@@ -15,7 +15,7 @@ export async function generateMetadata({
 
   return {
     title: `Cabin ${cabin.name}`,
-    description: cabin.description.slice(0, 150),
+    description: cabin?.description?.slice(0, 150) ?? "",
   };
 }
 

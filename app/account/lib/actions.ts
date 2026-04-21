@@ -4,6 +4,7 @@ import { supabaseAdmin } from "@/lib/supabase/admin";
 import { GuestFormData } from "../profile/ClientProfile";
 import { getCurrentGuest } from "@/lib/data/guests";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 export async function updateGuest(formData: GuestFormData) {
   const currentGuest = await getCurrentGuest();
@@ -66,6 +67,5 @@ export async function updateReservation(
     return { success: false, message: "Failed to update reservation" };
   }
   revalidatePath("/account/reservations");
-
   return { success: true, message: "Reservation updated successfully" };
 }
