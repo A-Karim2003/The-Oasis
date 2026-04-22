@@ -1,8 +1,8 @@
 import Title from "@/app/_components/Title";
 import { Metadata } from "next";
 import Link from "next/link";
-import ReservationCard from "../_components/ReservationCard";
 import { getBookings } from "@/lib/data/bookings";
+import Reservations from "../_components/Reservations";
 
 export const metadata: Metadata = {
   title: "Reservations",
@@ -26,11 +26,7 @@ export default async function ReservationsPage() {
         </p>
       )}
 
-      <div className="flex flex-col gap-4">
-        {reservations.map((reservation) => (
-          <ReservationCard key={reservation.id} reservation={reservation} />
-        ))}
-      </div>
+      <Reservations reservations={reservations} />
     </div>
   );
 }

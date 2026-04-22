@@ -4,7 +4,8 @@ import { supabaseAdmin } from "@/lib/supabase/admin";
 import { GuestFormData } from "../profile/ClientProfile";
 import { getCurrentGuest } from "@/lib/data/guests";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
+
+// const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export async function updateGuest(formData: GuestFormData) {
   const currentGuest = await getCurrentGuest();

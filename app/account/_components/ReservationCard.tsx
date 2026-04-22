@@ -13,8 +13,6 @@ import { Booking } from "@/lib/data/bookings";
 import { Button } from "@/components/ui/button";
 import { deleteReservation } from "../lib/actions";
 import { toast } from "react-toastify";
-import { useTransition } from "react";
-import { Spinner } from "@/components/ui/spinner";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -27,13 +25,15 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 
+type ReservationCardProp = {
+  reservation: Booking;
+  onOptimisticDelete: (bookingId: number) => void;
+};
+
 export default function ReservationCard({
   reservation,
-}: {
-  reservation: Booking;
-}) {
-  const [isPending, startTransition] = useTransition();
-
+  onOptimisticDelete,
+}: ReservationCardProp) {
   const isPastReservation = isPast(new Date(reservation.start_date));
   const numOfNights = differenceInDays(
     new Date(reservation.end_date),
@@ -43,16 +43,13 @@ export default function ReservationCard({
     (reservation.cabin_price ?? 0) * numOfNights +
     (reservation.extras_price ?? 0);
 
-  function handleDelete(reservationId: number) {
-    startTransition(async () => {
-      try {
-        await deleteReservation(reservationId);
-        toast.success("Deleted reservation");
-      } catch (e) {
-        toast.error("Failed to delete reservation");
-        throw e;
-      }
-    });
+  async function handleDelete(reservationId: number) {
+    onOptimisticDelete(reservationId);
+    try {
+      await deleteReservation(reservationId);
+    } catch {
+      toast.error("Failed to delete reservation");
+    }
   }
 
   return (
@@ -129,11 +126,10 @@ export default function ReservationCard({
               <AlertDialogTrigger asChild>
                 <Button
                   variant="ghost"
-                  disabled={isPending}
                   className="flex items-center gap-2 px-6 flex-1 text-primary-300 hover:bg-primary-800 hover:text-primary-100 transition-colors text-sm font-medium rounded-none h-full w-full min-h-12"
                 >
-                  {isPending ? <Spinner /> : <Trash2 className="w-4 h-4" />}
-                  {isPending ? "Deleting..." : "Delete"}
+                  <Trash2 className="w-4 h-4" />
+                  Delete
                 </Button>
               </AlertDialogTrigger>
               <AlertDialogContent className="bg-primary-900">
