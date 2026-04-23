@@ -3,12 +3,25 @@
 import { Calendar } from "@/components/ui/calendar";
 import { enGB } from "react-day-picker/locale";
 import { useReservation } from "../_context/ReservationContext";
-
-const MIN_BOOKING_LENGTH = 1;
-const MAX_BOOKING_LENGTH = 23;
+import { Button } from "@/components/ui/button";
+import { differenceInDays } from "date-fns";
 
 export default function ReservationCalendar() {
-  const { range, setRange, cabin } = useReservation();
+  const { range, setRange, resetRange, cabin, settings } = useReservation();
+  const { min_booking_length, max_booking_length } = settings;
+
+  // number of nights chosen on the calender
+  const numOfNights =
+    range?.from && range?.to ? differenceInDays(range.to, range.from) : 0;
+
+  const totalPrice = numOfNights * (cabin.price - (cabin?.discount ?? 0));
+
+  function formatCurrency(price: number) {
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+    }).format(price);
+  }
 
   return (
     <div className="flex flex-col">
@@ -17,19 +30,41 @@ export default function ReservationCalendar() {
         mode="range"
         required={false}
         disabled={{ before: new Date() }}
-        min={MIN_BOOKING_LENGTH}
-        max={MAX_BOOKING_LENGTH}
+        min={min_booking_length ?? 2}
+        max={max_booking_length || 21}
         endMonth={new Date(new Date().getFullYear() + 2, new Date().getMonth())}
         numberOfMonths={2}
         selected={range}
         onSelect={setRange}
         className="bg-primary-950 text-white p-4 w-full flex-1"
       />
-      <div className="bg-accent-500 text-primary-900 p-4 flex items-center h-20">
-        <span className="text-3xl font-bold">
-          ${cabin.price - (cabin?.discount || 0)}
-        </span>
-        <span className="text-sm ml-1">/night</span>
+      <div className="bg-accent-500 text-primary-900 p-4 flex items-center h-20 justify-between px-8">
+        <div className="h-full flex items-center">
+          <span className="text-3xl font-bold">
+            {formatCurrency(cabin.price - (cabin?.discount || 0))}
+          </span>
+          <span className="text-sm ml-1">/night</span>
+        </div>
+        {(range?.from || range?.to) && (
+          <div className="flex items-center justify-between gap-4">
+            <p className="p-4">
+              <b>x {numOfNights} nights</b>
+            </p>
+            <p className="p-4">
+              <b>Total: {formatCurrency(totalPrice)}</b>
+            </p>
+          </div>
+        )}
+
+        {(range?.from || range?.to) && (
+          <Button
+            onClick={resetRange}
+            variant="outline"
+            className="text-black bg-transparent border-black hover:bg-black hover:text-white"
+          >
+            clear
+          </Button>
+        )}
       </div>
     </div>
   );

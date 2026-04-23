@@ -30,11 +30,7 @@ export default async function CabinDetailPage({
   params: Promise<{ cabinId: string }>;
 }) {
   const { cabinId } = await params;
-
-  const [cabin, settings] = await Promise.all([
-    getCabin(cabinId),
-    getSettings(),
-  ]);
+  const cabin = await getCabin(cabinId);
 
   return (
     <div>
