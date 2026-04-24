@@ -13,7 +13,7 @@ export default function ReservationForm() {
         <div className="flex items-center gap-4">
           <Avatar className="w-8 h-8">
             <AvatarImage src={session?.user?.image ?? ""} />
-            <AvatarFallback>
+            <AvatarFallback suppressHydrationWarning>
               {session?.user?.name
                 ?.split(" ")
                 .map((n) => n[0])
@@ -21,7 +21,10 @@ export default function ReservationForm() {
                 .toUpperCase() ?? "?"}
             </AvatarFallback>
           </Avatar>
-          <span className="text-primary-100 font-semibold">
+          <span
+            className="text-primary-100 font-semibold"
+            suppressHydrationWarning
+          >
             {session?.user?.name}
           </span>
         </div>

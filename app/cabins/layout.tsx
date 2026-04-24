@@ -1,9 +1,9 @@
-import { ReservationProvider } from "./_context/ReservationContext";
+import RangeProvider from "./_context/RangeContext";
 
 export default function CabinPageLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return <ReservationProvider>{children}</ReservationProvider>;
+  return <RangeProvider>{children}</RangeProvider>;
 }

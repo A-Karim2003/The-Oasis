@@ -5,10 +5,14 @@ import { enGB } from "react-day-picker/locale";
 import { useReservation } from "../_context/ReservationContext";
 import { Button } from "@/components/ui/button";
 import { differenceInDays } from "date-fns";
+import { useRange } from "../_context/RangeContext";
 
 export default function ReservationCalendar() {
-  const { range, setRange, resetRange, cabin, settings } = useReservation();
+  const { cabin, settings, bookedDates } = useReservation();
+  const { range, setRange, resetRange } = useRange();
   const { min_booking_length, max_booking_length } = settings;
+
+  const parsedBookedDates = bookedDates.map((date) => new Date(date));
 
   // number of nights chosen on the calender
   const numOfNights =
@@ -29,7 +33,7 @@ export default function ReservationCalendar() {
         locale={enGB}
         mode="range"
         required={false}
-        disabled={{ before: new Date() }}
+        disabled={[{ before: new Date() }, ...parsedBookedDates]}
         min={min_booking_length ?? 2}
         max={max_booking_length || 21}
         endMonth={new Date(new Date().getFullYear() + 2, new Date().getMonth())}

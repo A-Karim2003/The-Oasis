@@ -1,11 +1,11 @@
 "use client";
 
-import { useReservation } from "../_context/ReservationContext";
 import { format } from "date-fns";
 import { X } from "lucide-react";
+import { useRange } from "../_context/RangeContext";
 
 export default function ReservationReminder() {
-  const { range, resetRange } = useReservation();
+  const { range, resetRange } = useRange();
 
   if (!range?.from || !range?.to) return null;
 

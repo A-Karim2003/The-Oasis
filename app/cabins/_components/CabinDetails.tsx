@@ -14,7 +14,7 @@ export default function CabinDetails({ cabin }: CabinDetailsProp) {
       </h2>
       <div className="relative w-120 max-[1024px]:w-full max-[1024px]:aspect-4/3">
         <Image
-          src={cabin.image_url}
+          src={cabin?.image_url || ""}
           fill
           alt={cabin.name}
           sizes="(max-width: 1024px) 100vw, 480px"
@@ -23,7 +23,7 @@ export default function CabinDetails({ cabin }: CabinDetailsProp) {
         />
       </div>
 
-      <CabinDetailsText description={cabin.description} />
+      <CabinDetailsText description={cabin.description!} />
     </div>
   );
 }
