@@ -8,13 +8,13 @@ type CabinProps = {
 };
 
 export default function Cabin({ cabin }: CabinProps) {
-  const discountedPrice = cabin.price - cabin.discount;
+  const discountedPrice = cabin.price - (cabin?.discount ?? 0);
 
   return (
     <div className="flex border border-primary-800">
       <div className="relative h-48 w-48 shrink-0">
         <Image
-          src={cabin.image_url}
+          src={cabin?.image_url ?? ""}
           alt={cabin.name}
           fill
           sizes="192px"
@@ -42,7 +42,7 @@ export default function Cabin({ cabin }: CabinProps) {
             <span className="text-3xl font-semibold text-primary-100">
               ${discountedPrice}
             </span>
-            {cabin.discount > 0 && (
+            {(cabin?.discount || 0) > 0 && (
               <span className="text-primary-400 line-through text-sm">
                 ${cabin.price}
               </span>

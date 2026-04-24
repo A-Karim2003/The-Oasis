@@ -27,6 +27,7 @@ export default async function page({
         <Suspense fallback={null}>
           <FilterTabs />
         </Suspense>
+
         <Suspense fallback={<CabinsListSkeleton />} key={capacityFilter}>
           <CabinsList capacityFilter={capacityFilter} />
           <ReservationReminder />

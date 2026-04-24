@@ -4,8 +4,8 @@ import { createContext, useContext, useState } from "react";
 import { DateRange } from "react-day-picker";
 
 type RangeContextType = {
-  range: DateRange | undefined;
-  setRange: (range: DateRange | undefined) => void;
+  globalRange: DateRange | undefined;
+  setGlobalRange: (range: DateRange | undefined) => void;
   resetRange: () => void;
 };
 
@@ -16,19 +16,19 @@ export default function RangeProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [range, setRange] = useState<DateRange | undefined>();
-  const resetRange = () => setRange({ from: undefined, to: undefined });
+  const [globalRange, setGlobalRange] = useState<DateRange | undefined>();
+
+  const resetRange = () => setGlobalRange(undefined);
 
   return (
-    <RangeContext value={{ range, setRange, resetRange }}>
+    <RangeContext.Provider value={{ globalRange, setGlobalRange, resetRange }}>
       {children}
-    </RangeContext>
+    </RangeContext.Provider>
   );
 }
 
 export function useRange() {
   const context = useContext(RangeContext);
-  if (!context)
-    throw new Error("useReservation must be used within a ReservationProvider");
+  if (!context) throw new Error("useRange must be used within RangeProvider");
   return context;
 }
