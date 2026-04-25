@@ -1,44 +1,64 @@
 "use client";
 
+import { useForm } from "react-hook-form";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useReservation } from "../_context/ReservationContext";
-import { DateRange } from "react-day-picker";
-import { differenceInDays } from "date-fns";
-import { Button } from "@/components/ui/button";
+import type { DateRange } from "react-day-picker";
+import { format } from "date-fns";
+import { Cabin } from "../lib/types";
+import { getCurrentGuest } from "@/lib/data/guests";
 
-export default function ReservationForm({
-  range,
-}: {
+type FormValues = {
+  num_of_guests: number;
+  observations?: string;
+};
+
+type Props = {
   range: DateRange | undefined;
-}) {
-  const { cabin, session } = useReservation();
+  cabin: Cabin;
+};
+
+export default function ReservationForm({ range, cabin }: Props) {
+  const { session } = useReservation();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>();
+
   const hasSelectedDates = range?.from && range?.to;
 
-  const numOfNights =
-    range?.from && range?.to ? differenceInDays(range.to, range.from) : 0;
+  async function onSubmit(data: FormValues) {
+    if (!range?.from || !range?.to) return;
 
-  const totalPrice = numOfNights * (cabin.price - (cabin?.discount ?? 0));
-
-  /*
-    cabin_id: number | null;
-    cabin_price: number | null;
-    created_at: string;
-    end_date: string;
-    extras_price: number | null;
-    guest_id: number | null;
-    hasBreakfast: boolean | null;
-    id: number;
-    isPaid: boolean | null;
-    num_of_guests: number;
-    observations: string | null;
-    start_date: string;
-    status: string | null;
-  */
+    const start_date = format(range.from, "yyyy-MM-dd HH:mm:ss");
+    const end_date = format(range.to, "yyyy-MM-dd HH:mm:ss");
+    const newBooking = {
+      cabin_id: cabin.id,
+      cabin_price: cabin.price,
+      extras_price: 0,
+      guest_id: 1000,
+      hasBreakfast: false,
+      isPaid: false,
+      num_of_guests: data.num_of_guests,
+      observations: data.observations || null,
+      end_date,
+      start_date,
+      status: "unconfirmed",
+    };
+    console.log(newBooking);
+  }
 
   return (
-    <form className="bg-primary-900 flex flex-col">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="bg-primary-900 flex flex-col"
+    >
+      {/* USER */}
       <div className="bg-primary-950 flex items-center justify-around gap-3 p-4">
         <span className="text-primary-300 text-sm">Logged in as</span>
+
         <div className="flex items-center gap-4">
           <Avatar className="w-8 h-8">
             <AvatarImage src={session?.user?.image ?? ""} />
@@ -50,6 +70,7 @@ export default function ReservationForm({
                 .toUpperCase() ?? "?"}
             </AvatarFallback>
           </Avatar>
+
           <span
             className="text-primary-100 font-semibold"
             suppressHydrationWarning
@@ -62,42 +83,57 @@ export default function ReservationForm({
       <div className="p-8 flex flex-col gap-6">
         <div className="flex flex-col gap-2">
           <label className="text-primary-200 text-lg">How many guests?</label>
-          <select className="bg-primary-800 text-primary-100 p-3 w-full border border-primary-700">
+
+          <select
+            className="bg-primary-800 text-primary-100 p-3 w-full border border-primary-700"
+            {...register("num_of_guests", {
+              required: "Please select number of guests",
+              valueAsNumber: true,
+            })}
+          >
             <option value="">Select number of guests...</option>
             {Array.from({ length: cabin.capacity }, (_, i) => i + 1).map(
-              (item) => (
-                <option key={item} value={item + 1}>
-                  {`${item} guest${item > 1 ? "s" : ""}`}
+              (num) => (
+                <option key={num} value={num}>
+                  {num} guest{num > 1 ? "s" : ""}
                 </option>
               ),
             )}
           </select>
+
+          {errors.num_of_guests && (
+            <span className="text-red-400 text-sm">
+              {errors.num_of_guests.message}
+            </span>
+          )}
         </div>
 
         <div className="flex flex-col gap-2">
           <label className="text-primary-200 text-lg">
             Anything we should know about your stay?
           </label>
+
           <textarea
             className="bg-primary-800 text-primary-100 p-3 border border-primary-700 resize-none h-32"
             placeholder="Any pets, allergies, special requirements, etc.?"
+            {...register("observations")}
           />
         </div>
 
-        {!hasSelectedDates ? (
-          <span className="text-primary-400 italic">
-            Start by selecting dates
-          </span>
-        ) : (
-          <div className="border flex items-center justify-between">
-            <span className="text-green-400">Dates selected ✅</span>
-            <div className="text-right">
-              <Button className="bg-accent-600 p-4 py-5 text-lg ">
-                Reserve now
-              </Button>
-            </div>
-          </div>
-        )}
+        <div className="flex justify-end mt-auto">
+          {!hasSelectedDates ? (
+            <span className="text-primary-400 italic">
+              Start by selecting dates
+            </span>
+          ) : (
+            <button
+              type="submit"
+              className="bg-accent-500 hover:bg-accent-600 text-primary-900 font-semibold px-6 py-3"
+            >
+              Reserve now
+            </button>
+          )}
+        </div>
       </div>
     </form>
   );

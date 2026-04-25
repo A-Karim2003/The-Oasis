@@ -4,6 +4,8 @@ import { supabaseAdmin } from "@/lib/supabase/admin";
 import { GuestFormData } from "../profile/ClientProfile";
 import { getCurrentGuest } from "@/lib/data/guests";
 import { revalidatePath } from "next/cache";
+import { Tables } from "@/types/supabase";
+export type NewBooking = Tables<"bookings">;
 
 // const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -69,4 +71,14 @@ export async function updateReservation(
   }
   revalidatePath("/account/reservations");
   return { success: true, message: "Reservation updated successfully" };
+}
+
+export async function addReservation(
+  booking: Omit<NewBooking, "id" | "created_at">,
+) {
+  const currentGuest = await getCurrentGuest();
+  if (!currentGuest) throw new Error("Unauthorized");
+
+  const { error } = await supabaseAdmin.from("bookings").insert(booking);
+  if (error) throw new Error("Booking could not be created");
 }

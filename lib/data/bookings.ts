@@ -1,3 +1,4 @@
+import { Tables } from "@/types/supabase";
 import { supabaseAdmin } from "../supabase/admin";
 import { getCurrentGuest } from "./guests";
 import { QueryData } from "@supabase/supabase-js";
@@ -9,6 +10,7 @@ const bookingsQuery = supabaseAdmin
 
 export type Bookings = QueryData<typeof bookingsQuery>;
 export type Booking = Bookings[number];
+export type NewBooking = Tables<"bookings">;
 
 export async function getBookings() {
   const guest = await getCurrentGuest();
