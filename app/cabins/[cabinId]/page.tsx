@@ -1,6 +1,5 @@
 import { getCabin } from "@/lib/data/cabins";
 import CabinDetails from "../_components/CabinDetails";
-import { getSettings } from "@/lib/data/settings";
 import CabinReservationWrapper from "../_components/CabinReservationWrapper";
 import { Suspense } from "react";
 import { LoadingSpinner } from "@/app/_components/LoadingSpinner";

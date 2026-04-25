@@ -8,7 +8,7 @@ import { authClient } from "@/app/lib/auth-client";
 type Guest = Tables<"guests">;
 type Settings = Tables<"settings">;
 
-type ReservationContextType = {
+export type ReservationContextType = {
   range: DateRange | undefined;
   setRange: (range: DateRange | undefined) => void;
   resetRange: () => void;

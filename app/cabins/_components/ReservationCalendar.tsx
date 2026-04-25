@@ -4,16 +4,20 @@ import { Calendar } from "@/components/ui/calendar";
 import { enGB } from "react-day-picker/locale";
 import { Button } from "@/components/ui/button";
 import { differenceInDays } from "date-fns";
-import { useState } from "react";
 import { useRange } from "../_context/RangeContext";
 import { useReservation } from "../_context/ReservationContext";
 import { DateRange } from "react-day-picker";
 
-export default function ReservationCalendar() {
-  const { cabin, settings, bookedDates } = useReservation();
+export type ReservationCalendarProps = {
+  range: DateRange | undefined;
+  setRange: (range: DateRange | undefined) => void;
+};
 
-  // LOCAL state (per cabin)
-  const [range, setRange] = useState<DateRange | undefined>();
+export default function ReservationCalendar({
+  range,
+  setRange,
+}: ReservationCalendarProps) {
+  const { cabin, settings, bookedDates } = useReservation();
 
   // GLOBAL setter (for reservation reminder)
   const { setGlobalRange } = useRange();
