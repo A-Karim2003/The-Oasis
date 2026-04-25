@@ -5,9 +5,9 @@ import { X } from "lucide-react";
 import { useRange } from "../_context/RangeContext";
 
 export default function ReservationReminder() {
-  const { range, resetRange } = useRange();
+  const { globalRange, resetRange } = useRange();
 
-  if (!range?.from || !range?.to) return null;
+  if (!globalRange?.from || !globalRange?.to) return null;
 
   return (
     <div
@@ -22,8 +22,8 @@ export default function ReservationReminder() {
     >
       <span>
         👋 Don&apos;t forget to reserve your dates —{" "}
-        <strong>{format(range.from, "MMM dd yyyy")}</strong> to{" "}
-        <strong>{format(range.to, "MMM dd yyyy")}</strong>
+        <strong>{format(globalRange.from, "MMM dd yyyy")}</strong> to{" "}
+        <strong>{format(globalRange.to, "MMM dd yyyy")}</strong>
       </span>
       <button
         onClick={resetRange}

@@ -21,9 +21,9 @@ export default function RangeProvider({
   const resetRange = () => setGlobalRange(undefined);
 
   return (
-    <RangeContext.Provider value={{ globalRange, setGlobalRange, resetRange }}>
+    <RangeContext value={{ globalRange, setGlobalRange, resetRange }}>
       {children}
-    </RangeContext.Provider>
+    </RangeContext>
   );
 }
 
