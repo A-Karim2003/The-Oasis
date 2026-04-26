@@ -47,24 +47,6 @@ A full-stack cabin booking platform where guests can browse, reserve, and manage
 
 ---
 
-## Project Structure
-
-```
-app/
-├── _components/        # Shared UI components
-├── about/              # About page
-├── account/            # Protected guest area (reservations, profile)
-├── api/                # Route handlers
-├── cabins/             # Cabin listing and detail pages
-├── lib/                # App-level utilities
-└── login/              # Login page
-lib/                    # Data fetching, Supabase client, auth helpers
-types/                  # Shared TypeScript types
-components/             # shadcn/ui components
-```
-
----
-
 ## Getting Started
 
 ### Prerequisites
