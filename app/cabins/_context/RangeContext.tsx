@@ -2,11 +2,14 @@
 
 import { createContext, useContext, useState } from "react";
 import { DateRange } from "react-day-picker";
+import { Cabin } from "../lib/types";
 
 type RangeContextType = {
   globalRange: DateRange | undefined;
   setGlobalRange: (range: DateRange | undefined) => void;
   resetRange: () => void;
+  selectedCabin: Cabin | undefined;
+  setSelectedCabin: (cabin: Cabin | undefined) => void;
 };
 
 const RangeContext = createContext<RangeContextType | null>(null);
@@ -17,11 +20,20 @@ export default function RangeProvider({
   children: React.ReactNode;
 }) {
   const [globalRange, setGlobalRange] = useState<DateRange | undefined>();
+  const [selectedCabin, setSelectedCabin] = useState<Cabin | undefined>();
 
   const resetRange = () => setGlobalRange(undefined);
 
   return (
-    <RangeContext value={{ globalRange, setGlobalRange, resetRange }}>
+    <RangeContext
+      value={{
+        globalRange,
+        setGlobalRange,
+        resetRange,
+        selectedCabin,
+        setSelectedCabin,
+      }}
+    >
       {children}
     </RangeContext>
   );

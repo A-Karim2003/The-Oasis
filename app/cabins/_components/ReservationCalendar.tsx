@@ -20,7 +20,7 @@ export default function ReservationCalendar({
   const { cabin, settings, bookedDates } = useReservation();
 
   // GLOBAL setter (for reservation reminder)
-  const { setGlobalRange } = useRange();
+  const { setGlobalRange, setSelectedCabin } = useRange();
 
   const { min_booking_length, max_booking_length } = settings;
 
@@ -41,6 +41,8 @@ export default function ReservationCalendar({
   function handleSelect(newRange: DateRange | undefined) {
     setRange(newRange); // local (this cabin only)
     setGlobalRange(newRange); // global (for reminder)
+
+    setSelectedCabin(newRange?.from && newRange?.to ? cabin : undefined);
   }
 
   return (

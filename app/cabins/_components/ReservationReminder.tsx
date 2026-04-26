@@ -2,10 +2,11 @@
 
 import { format } from "date-fns";
 import { X } from "lucide-react";
+import Link from "next/link";
 import { useRange } from "../_context/RangeContext";
 
 export default function ReservationReminder() {
-  const { globalRange, resetRange } = useRange();
+  const { globalRange, resetRange, selectedCabin } = useRange();
 
   if (!globalRange?.from || !globalRange?.to) return null;
 
@@ -21,7 +22,15 @@ export default function ReservationReminder() {
       className="bg-accent-500 text-primary-800 py-3 px-6 rounded-full shadow-xl flex items-center gap-4 whitespace-nowrap"
     >
       <span>
-        👋 Don&apos;t forget to reserve your dates —{" "}
+        👋 Don&apos;t forget to reserve{" "}
+        <Link
+          href={`/cabins/${selectedCabin?.id}`}
+          className="font-bold underline hover:text-primary-900 transition-colors cursor-pointer"
+          style={{ cursor: "pointer" }}
+        >
+          cabin {selectedCabin?.name}
+        </Link>{" "}
+        for the dates —{" "}
         <strong>{format(globalRange.from, "MMM dd yyyy")}</strong> to{" "}
         <strong>{format(globalRange.to, "MMM dd yyyy")}</strong>
       </span>

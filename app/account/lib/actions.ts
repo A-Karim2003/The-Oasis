@@ -5,6 +5,7 @@ import { GuestFormData } from "../profile/ClientProfile";
 import { getCurrentGuest } from "@/lib/data/guests";
 import { revalidatePath } from "next/cache";
 import { Tables } from "@/types/supabase";
+import { redirect } from "next/navigation";
 export type NewBooking = Tables<"bookings">;
 
 // const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -79,7 +80,7 @@ export async function addReservation(
   const currentGuest = await getCurrentGuest();
   if (!currentGuest) throw new Error("Unauthorized");
 
-  const { data, error } = await supabaseAdmin
+  const { error } = await supabaseAdmin
     .from("bookings")
     .insert({ ...booking, guest_id: currentGuest.id })
     .select()
@@ -87,5 +88,6 @@ export async function addReservation(
 
   if (error) throw new Error("Booking could not be created");
 
-  return data;
+  revalidatePath(`/cabins/${booking.cabin_id}`);
+  redirect("/cabins/thankyou");
 }

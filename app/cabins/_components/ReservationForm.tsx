@@ -8,6 +8,7 @@ import { format } from "date-fns";
 import { Cabin } from "../lib/types";
 import { addReservation } from "@/app/account/lib/actions";
 import { toast } from "react-toastify";
+import { isRedirectError } from "next/dist/client/components/redirect-error";
 
 type FormValues = {
   num_of_guests: number;
@@ -51,9 +52,11 @@ export default function ReservationForm({ range, cabin, setRange }: Props) {
 
     try {
       await addReservation(newBooking);
-      toast.success("Reservation created successfully!");
       setRange(undefined);
-    } catch {
+    } catch (e) {
+      // redirect() throws internally rethrow so Next.js can handle the navigation
+      if (isRedirectError(e)) throw e;
+      console.error(e);
       toast.error("Failed to create reservation. Please try again.");
     }
   }
@@ -138,7 +141,7 @@ export default function ReservationForm({ range, cabin, setRange }: Props) {
               type="submit"
               className="bg-accent-500 hover:bg-accent-600 text-primary-900 font-semibold px-6 py-3"
             >
-              Reserve now
+              {isSubmitting ? "Reserving..." : "Reserve now"}
             </button>
           )}
         </div>
