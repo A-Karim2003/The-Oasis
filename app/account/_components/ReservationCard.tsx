@@ -47,6 +47,7 @@ export default function ReservationCard({
     onOptimisticDelete(reservationId);
     try {
       await deleteReservation(reservationId);
+      toast.error("Cabin successfully deleted");
     } catch {
       toast.error("Failed to delete reservation");
     }

@@ -6,7 +6,8 @@ import { useReservation } from "../_context/ReservationContext";
 import type { DateRange } from "react-day-picker";
 import { format } from "date-fns";
 import { Cabin } from "../lib/types";
-import { getCurrentGuest } from "@/lib/data/guests";
+import { addReservation } from "@/app/account/lib/actions";
+import { toast } from "react-toastify";
 
 type FormValues = {
   num_of_guests: number;
@@ -15,16 +16,17 @@ type FormValues = {
 
 type Props = {
   range: DateRange | undefined;
+  setRange: (range: DateRange | undefined) => void;
   cabin: Cabin;
 };
 
-export default function ReservationForm({ range, cabin }: Props) {
+export default function ReservationForm({ range, cabin, setRange }: Props) {
   const { session } = useReservation();
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<FormValues>();
 
   const hasSelectedDates = range?.from && range?.to;
@@ -38,7 +40,6 @@ export default function ReservationForm({ range, cabin }: Props) {
       cabin_id: cabin.id,
       cabin_price: cabin.price,
       extras_price: 0,
-      guest_id: 1000,
       hasBreakfast: false,
       isPaid: false,
       num_of_guests: data.num_of_guests,
@@ -47,7 +48,14 @@ export default function ReservationForm({ range, cabin }: Props) {
       start_date,
       status: "unconfirmed",
     };
-    console.log(newBooking);
+
+    try {
+      await addReservation(newBooking);
+      toast.success("Reservation created successfully!");
+      setRange(undefined);
+    } catch {
+      toast.error("Failed to create reservation. Please try again.");
+    }
   }
 
   return (
@@ -55,7 +63,6 @@ export default function ReservationForm({ range, cabin }: Props) {
       onSubmit={handleSubmit(onSubmit)}
       className="bg-primary-900 flex flex-col"
     >
-      {/* USER */}
       <div className="bg-primary-950 flex items-center justify-around gap-3 p-4">
         <span className="text-primary-300 text-sm">Logged in as</span>
 
@@ -127,6 +134,7 @@ export default function ReservationForm({ range, cabin }: Props) {
             </span>
           ) : (
             <button
+              disabled={isSubmitting}
               type="submit"
               className="bg-accent-500 hover:bg-accent-600 text-primary-900 font-semibold px-6 py-3"
             >

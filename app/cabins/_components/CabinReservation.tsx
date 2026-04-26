@@ -20,7 +20,7 @@ export default function CabinReservation() {
 
       <div className="grid grid-cols-2 max-[900px]:grid-cols-1 border border-primary-800">
         <ReservationCalendar range={range} setRange={setRange} />
-        <ReservationForm range={range} cabin={cabin} />
+        <ReservationForm range={range} cabin={cabin} setRange={setRange} />
       </div>
     </div>
   );

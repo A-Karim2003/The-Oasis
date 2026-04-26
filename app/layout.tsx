@@ -3,6 +3,7 @@ import "./globals.css";
 import { Josefin_Sans } from "next/font/google";
 import { cn } from "@/lib/utils";
 import Header from "./_components/Header";
+import ToastProvider from "./_components/ToastProvider";
 
 const josefin = Josefin_Sans({
   subsets: ["latin"],
@@ -27,6 +28,8 @@ export default function RootLayout({
         <Header />
 
         <main className="flex-1 max-w-7xl w-full m-auto p-6">{children}</main>
+
+        <ToastProvider />
       </body>
     </html>
   );

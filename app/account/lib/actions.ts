@@ -74,11 +74,18 @@ export async function updateReservation(
 }
 
 export async function addReservation(
-  booking: Omit<NewBooking, "id" | "created_at">,
+  booking: Omit<NewBooking, "id" | "created_at" | "guest_id">,
 ) {
   const currentGuest = await getCurrentGuest();
   if (!currentGuest) throw new Error("Unauthorized");
 
-  const { error } = await supabaseAdmin.from("bookings").insert(booking);
+  const { data, error } = await supabaseAdmin
+    .from("bookings")
+    .insert({ ...booking, guest_id: currentGuest.id })
+    .select()
+    .single();
+
   if (error) throw new Error("Booking could not be created");
+
+  return data;
 }
