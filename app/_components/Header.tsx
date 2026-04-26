@@ -48,11 +48,11 @@ export default function Header() {
             src={logo}
             height="60"
             width="60"
-            alt="The Wild Oasis logo"
+            alt="The Oasis logo"
             preload={true}
           />
           <span className="text-xl font-semibold text-primary-100">
-            The Wild Oasis
+            The Oasis
           </span>
         </Link>
         <nav>

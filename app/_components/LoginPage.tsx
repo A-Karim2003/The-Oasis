@@ -28,7 +28,7 @@ export default function LoginPage() {
           src={logo}
           width={52}
           height={52}
-          alt="The Wild Oasis"
+          alt="The Oasis"
           className="mb-6"
         />
 
