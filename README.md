@@ -8,10 +8,13 @@ A full-stack cabin booking platform where guests can browse, reserve, and manage
 
 ## Screenshots
 
-![Home](./screenshots/home.png)
-![Cabins](./screenshots/cabins.png)
-![Cabin Detail](./screenshots/cabin-detail.png)
-![Reservations](./screenshots/reservations.png)
+![Home](/public/images/homepage.png)
+
+![Cabins](/public/images/cabins-page.png)
+
+![Cabin](/public/images/cabin-page.png)
+
+![Reservations](/public/images/reservations.png)
 
 ---
 

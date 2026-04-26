@@ -13,6 +13,7 @@ type NavLink = {
 
 export default function Header() {
   const { data: session } = authClient.useSession();
+  console.log(session?.user?.image);
 
   const navLinks: NavLink[] = [
     { label: "Cabins", url: "/cabins" },
