@@ -20,7 +20,7 @@ export default async function Home() {
 
           <Link
             className="bg-accent-500 px-8 py-6 text-primary-800 text-lg font-semibold hover:bg-accent-600 transition-all"
-            href={""}
+            href={"/cabins"}
           >
             Explore luxury cabins
           </Link>
