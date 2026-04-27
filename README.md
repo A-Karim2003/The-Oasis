@@ -2,8 +2,6 @@
 
 A full-stack cabin booking platform where guests can browse, reserve, and manage stays at luxury cabins in the Italian Dolomites.
 
-**Live Demo:** _coming soon_
-
 ---
 
 ## Screenshots
